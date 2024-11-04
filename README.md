@@ -13,7 +13,7 @@ This is a Kotlin Multiplatform project targeting Android, iOS.
 # TODO LIST
   - SplashScreen [Done]
   - AlarmListScreen
-  - AlarmSettingScreen
+  - AlarmDetailScreen
   - AlarmTriggerScreen
 
 
