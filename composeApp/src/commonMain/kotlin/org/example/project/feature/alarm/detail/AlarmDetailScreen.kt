@@ -1,6 +1,6 @@
-package org.example.project.ui.alarm.detail
+package org.example.project.feature.alarm.detail
 
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 
 @Composable

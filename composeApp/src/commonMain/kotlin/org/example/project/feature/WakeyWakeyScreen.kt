@@ -1,4 +1,4 @@
-package org.example.project.ui
+package org.example.project.feature
 
 enum class WakeyWakeyScreen {
     AlarmListScreen,
