@@ -3,13 +3,17 @@ package org.example.project
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import org.example.project.core.presentation.theme.AlarmTheme
+import org.example.project.feature.alarm.detail.AlarmDetailScreen
 import org.example.project.feature.alarm.list.AlarmListScreen
 import org.example.project.feature.alarm.model.AlarmUI
 import org.example.project.feature.alarm.model.DisplayableDateTime
@@ -63,9 +67,8 @@ fun AlarmListPreview() {
         ),
     )
     AlarmTheme {
-        AlarmListScreen(
-            alarms = listOf(),
-            onCardClick = {}
+        AlarmDetailScreen(
+            modifier = Modifier.background(Color.Gray)
         )
     }
 }
