@@ -1,4 +1,4 @@
-package org.example.project.feature.alarm.model
+package org.example.project.alarm.presentations.model
 
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.format.FormatStringsInDatetimeFormats

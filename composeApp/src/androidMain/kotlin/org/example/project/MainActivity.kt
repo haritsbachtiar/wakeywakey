@@ -13,10 +13,9 @@ import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import org.example.project.core.presentation.theme.AlarmTheme
-import org.example.project.feature.alarm.detail.AlarmDetailScreen
-import org.example.project.feature.alarm.list.AlarmListScreen
-import org.example.project.feature.alarm.model.AlarmUI
-import org.example.project.feature.alarm.model.DisplayableDateTime
+import org.example.project.alarm.presentations.detail.AlarmDetailScreen
+import org.example.project.alarm.presentations.model.AlarmUI
+import org.example.project.alarm.presentations.model.DisplayableDateTime
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

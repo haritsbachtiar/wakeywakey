@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.realmPlugin)
 }
 
 kotlin {
@@ -45,6 +46,12 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtime.compose)
             implementation(libs.navigation.compose)
             implementation(libs.kotlinx.datetime)
+
+            // Realm
+            implementation(libs.realm.library.base)
+
+            // Koin
+            api(libs.koin.core)
         }
     }
 }

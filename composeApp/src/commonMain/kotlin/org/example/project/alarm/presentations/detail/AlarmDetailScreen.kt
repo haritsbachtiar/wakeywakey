@@ -1,4 +1,4 @@
-package org.example.project.feature.alarm.detail
+package org.example.project.alarm.presentations.detail
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -63,7 +63,7 @@ fun AlarmDetailScreen(
             }
 
             Button(
-                contentPadding = PaddingValues(horizontal = 32.dp, vertical = 14.dp),
+                contentPadding = PaddingValues(horizontal = 32.dp, vertical = 8.dp),
                 modifier = Modifier.clip(RoundedCornerShape(100)),
                 onClick = {}
             ) {

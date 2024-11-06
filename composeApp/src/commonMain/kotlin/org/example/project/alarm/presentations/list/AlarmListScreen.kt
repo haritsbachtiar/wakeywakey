@@ -1,4 +1,4 @@
-package org.example.project.feature.alarm.list
+package org.example.project.alarm.presentations.list
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,15 +9,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import org.example.project.feature.alarm.list.components.AlarmListItem
-import org.example.project.feature.alarm.model.AlarmUI
+import org.example.project.alarm.presentations.list.components.AlarmListItem
+import org.example.project.alarm.presentations.model.AlarmUI
 
 @Composable
 fun AlarmListScreen(

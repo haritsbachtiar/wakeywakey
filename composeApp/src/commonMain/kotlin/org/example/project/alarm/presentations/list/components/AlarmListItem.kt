@@ -1,4 +1,4 @@
-package org.example.project.feature.alarm.list.components
+package org.example.project.alarm.presentations.list.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,7 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import org.example.project.feature.alarm.model.AlarmUI
+import org.example.project.alarm.presentations.model.AlarmUI
 
 @Composable
 fun AlarmListItem(

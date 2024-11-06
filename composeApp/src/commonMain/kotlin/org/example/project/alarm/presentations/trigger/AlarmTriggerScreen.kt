@@ -1,4 +1,4 @@
-package org.example.project.feature.alarm.trigger
+package org.example.project.alarm.presentations.trigger
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable

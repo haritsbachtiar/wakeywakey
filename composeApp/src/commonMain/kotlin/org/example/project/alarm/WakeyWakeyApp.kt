@@ -1,4 +1,4 @@
-package org.example.project.feature
+package org.example.project.alarm
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -24,8 +24,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import org.example.project.feature.alarm.detail.AlarmDetailScreen
-import org.example.project.feature.alarm.list.AlarmListScreen
+import org.example.project.alarm.presentations.WakeyWakeyScreen
+import org.example.project.alarm.presentations.detail.AlarmDetailScreen
+import org.example.project.alarm.presentations.list.AlarmListScreen
 
 @Composable
 fun WakeyWakeyApp(
