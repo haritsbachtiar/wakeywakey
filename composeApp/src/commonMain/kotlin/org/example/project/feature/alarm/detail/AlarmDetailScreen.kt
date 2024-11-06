@@ -1,7 +1,9 @@
 package org.example.project.feature.alarm.detail
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -12,6 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -27,7 +30,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
+import org.jetbrains.compose.resources.vectorResource
 
 @Composable
 fun AlarmDetailScreen(
@@ -41,19 +46,22 @@ fun AlarmDetailScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 8.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Button(
-                modifier = Modifier,
-                colors = ButtonDefaults.buttonColors(),
-                onClick = {}
-            ) {
+            Box(modifier = Modifier
+                .clickable {
+                    /** Trigger action here i.e. close the screen */
+                }
+                .wrapContentSize()
+                .background(color = Color.LightGray, shape = RoundedCornerShape(4.dp))) {
                 Icon(
                     modifier = Modifier.size(32.dp),
                     imageVector = Icons.Default.Close,
-                    contentDescription = "Close the screen",
-                )
+                    tint = Color.White,
+                    contentDescription = "Close this screen")
             }
+
             Button(
                 contentPadding = PaddingValues(horizontal = 32.dp, vertical = 14.dp),
                 modifier = Modifier.clip(RoundedCornerShape(100)),
