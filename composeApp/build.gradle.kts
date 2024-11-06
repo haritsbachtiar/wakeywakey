@@ -16,6 +16,17 @@ kotlin {
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
         }
+
+        @OptIn(ExperimentalKotlinGradlePluginApi::class)
+        instrumentedTestVariant {
+            sourceSetTree.set(KotlinSourceSetTree.test)
+
+            dependencies {
+                implementation(libs.core.ktx)
+                implementation(libs.compose.ui.test.junit4.android)
+                debugImplementation(libs.compose.ui.test.manifest)
+            }
+        }
     }
     
     listOf(
@@ -55,22 +66,6 @@ kotlin {
 
             @OptIn(ExperimentalComposeLibrary::class)
             implementation(compose.uiTest)
-        }
-        androidTarget {
-            @OptIn(ExperimentalKotlinGradlePluginApi::class)
-            compilerOptions {
-                jvmTarget.set(JvmTarget.JVM_11)
-            }
-            @OptIn(ExperimentalKotlinGradlePluginApi::class)
-            instrumentedTestVariant {
-                sourceSetTree.set(KotlinSourceSetTree.test)
-
-                dependencies {
-                    implementation(libs.core.ktx)
-                    implementation(libs.compose.ui.test.junit4.android)
-                    debugImplementation(libs.compose.ui.test.manifest)
-                }
-            }
         }
     }
 }
