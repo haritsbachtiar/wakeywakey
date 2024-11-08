@@ -32,10 +32,21 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
+import kotlinx.datetime.Clock
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toInstant
+import kotlinx.datetime.toLocalDateTime
+import org.example.project.alarm.presentations.AlarmsAction
+import org.example.project.alarm.presentations.AlarmsState
+import org.example.project.alarm.presentations.model.AlarmUI
+import org.example.project.alarm.presentations.model.DisplayableDateTime
 import org.jetbrains.compose.resources.vectorResource
 
 @Composable
 fun AlarmDetailScreen(
+    alarmState: AlarmsState,
+    onAction: (action: AlarmsAction) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -68,6 +79,11 @@ fun AlarmDetailScreen(
                 onClick = {}
             ) {
                 Text("Save", color = Color.White)
+                onAction(AlarmsAction.OnAlarmsCreate(alarmUI = AlarmUI(
+                    name = "test alarm",
+                    hourDisplay = DisplayableDateTime(Clock.System.now().toLocalDateTime(TimeZone.UTC), ""),
+                    countDownDisplay = DisplayableDateTime(Clock.System.now().toLocalDateTime(TimeZone.UTC), "")
+                )))
             }
         }
         Column(

@@ -7,7 +7,7 @@ import org.example.project.alarm.data.tables.AlarmTable
 import org.example.project.alarm.domain.AlarmDataSource
 import org.example.project.core.data.local_client.RealmDbClient
 
-class LocalAlarmDataSource(
+class LocalAlarmDataSourceImp(
     private val realmDbClient: RealmDbClient
 ) : AlarmDataSource {
     override suspend fun writeAlarm(alarmTime: String, alarmName: String) {

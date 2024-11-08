@@ -19,14 +19,18 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import org.example.project.alarm.presentations.AlarmsAction
+import org.example.project.alarm.presentations.AlarmsViewModel
 import org.example.project.alarm.presentations.WakeyWakeyScreen
 import org.example.project.alarm.presentations.detail.AlarmDetailScreen
 import org.example.project.alarm.presentations.list.AlarmListScreen
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun WakeyWakeyApp(
@@ -38,6 +42,10 @@ fun WakeyWakeyApp(
     val currentScreen = WakeyWakeyScreen.valueOf(
         backStackEntry?.destination?.route ?: WakeyWakeyScreen.AlarmListScreen.name
     )
+
+    val alarmsViewModel = koinViewModel<AlarmsViewModel>()
+    val alarmState by alarmsViewModel.state.collectAsStateWithLifecycle()
+
 
     Scaffold(
         topBar = {
@@ -76,7 +84,11 @@ fun WakeyWakeyApp(
                 )
             }
             composable(route = WakeyWakeyScreen.AlarmDetailScreen.name) {
-                AlarmDetailScreen()
+                AlarmDetailScreen(
+                    alarmState = alarmState,
+                    onAction = { action: AlarmsAction ->
+                        alarmsViewModel.onAction(action)
+                    })
             }
             composable(route = WakeyWakeyScreen.AlarmTriggerScreen.name) {
 

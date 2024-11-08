@@ -2,22 +2,18 @@ package org.example.project.alarm.presentations
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import org.example.project.alarm.domain.AlarmDataSource
 import org.example.project.alarm.presentations.model.AlarmUI
 
 class AlarmsViewModel(
-    private val dataSource: AlarmDataSource
+    private val alarmDataSource: AlarmDataSource
 ) : ViewModel() {
-    var _state = MutableStateFlow(AlarmsState())
+    private var _state = MutableStateFlow(AlarmsState())
     val state = _state
         .onStart { loadAlarms() }
         .stateIn(
@@ -52,7 +48,7 @@ class AlarmsViewModel(
     }
 
     private fun createAlarm(alarmUI: AlarmUI) {
-        // TODO
+    //    alarmDataSource.writeAlarm(alarmUI.name, alarmUI.hourDisplay)
     }
 
     private fun updateAlarm(alarmUI: AlarmUI) {

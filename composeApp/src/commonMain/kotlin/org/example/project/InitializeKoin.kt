@@ -1,5 +1,6 @@
 package org.example.project
 
+import org.example.project.di.alarmDetailsModule
 import org.example.project.di.localCacheModule
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
@@ -12,6 +13,7 @@ fun initializeKoin(koinConfig: KoinAppDeclaration? = null, vararg platformSpecif
 
         this.modules(
             localCacheModule,
+            alarmDetailsModule,
             *platformSpecificModules
         )
     }

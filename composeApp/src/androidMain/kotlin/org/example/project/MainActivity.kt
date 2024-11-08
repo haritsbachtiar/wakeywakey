@@ -65,9 +65,9 @@ fun AlarmListPreview() {
             ),
         ),
     )
-    AlarmTheme {
+   /* AlarmTheme {
         AlarmDetailScreen(
             modifier = Modifier.background(Color.Gray)
         )
-    }
+    }*/
 }

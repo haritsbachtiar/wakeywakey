@@ -4,14 +4,14 @@ import io.realm.kotlin.Realm
 import io.realm.kotlin.RealmConfiguration
 import org.example.project.alarm.domain.AlarmDataSource
 import org.example.project.alarm.data.tables.AlarmTable
-import org.example.project.alarm.data.LocalAlarmDataSource
+import org.example.project.alarm.data.LocalAlarmDataSourceImp
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val localCacheModule = module {
     single { provideRealm() }
-    singleOf(::LocalAlarmDataSource).bind<AlarmDataSource>()
+    singleOf(::LocalAlarmDataSourceImp).bind<AlarmDataSource>()
 }
 
 fun provideRealm(): Realm {
