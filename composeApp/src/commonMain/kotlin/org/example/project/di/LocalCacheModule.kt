@@ -14,10 +14,3 @@ val localCacheModule = module {
     single { RealmDbClient() }
     singleOf(::LocalAlarmDataSourceImp).bind<AlarmDataSource>()
 }
-
-fun provideRealm(): Realm {
-    val config = RealmConfiguration.Builder(
-        schema = setOf(AlarmTable::class)
-    ).build()
-    return Realm.open(config)
-}
