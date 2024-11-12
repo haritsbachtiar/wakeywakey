@@ -14,7 +14,6 @@ class LocalAlarmDataSourceImp(
         realmDbClient.realm.write {
             this.copyToRealm(
                 instance = AlarmTable().apply {
-                    this.alarmTime = alarmTime
                     this.name = alarmName
                 },
                 updatePolicy = UpdatePolicy.ALL
@@ -27,7 +26,6 @@ class LocalAlarmDataSourceImp(
             val existingAlarm = findLatest(alarmTable)
 
             if(existingAlarm != null) {
-                existingAlarm.alarmTime = alarmTable.alarmTime
                 existingAlarm.name = alarmTable.name
 
                 copyToRealm(existingAlarm, updatePolicy = UpdatePolicy.ALL)
