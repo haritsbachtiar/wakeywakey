@@ -24,7 +24,14 @@ class LocalAlarmDataSourceImp(
 
     override suspend fun updateAlarm(alarmTable: AlarmTable) {
         realmDbClient.realm.write {
-            // TODO
+            val existingAlarm = findLatest(alarmTable)
+
+            if(existingAlarm != null) {
+                existingAlarm.alarmTime = alarmTable.alarmTime
+                existingAlarm.name = alarmTable.name
+
+                copyToRealm(existingAlarm, updatePolicy = UpdatePolicy.ALL)
+            }
         }
     }
 
