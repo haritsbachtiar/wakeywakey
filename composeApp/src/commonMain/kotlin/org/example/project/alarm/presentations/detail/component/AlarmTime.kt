@@ -1,6 +1,7 @@
 package org.example.project.alarm.presentations.detail.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -20,12 +21,16 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun AlarmTime(
     modifier: Modifier = Modifier,
-    hour: String,
-    minutes: String,
-    description: String
+    hour: Int,
+    minutes: Int,
+    description: String,
+    onClick: () -> Unit
 ) {
     Column(
         modifier = modifier
+            .clickable {
+                onClick.invoke()
+            }
             .background(Color.White, shape = RoundedCornerShape(10.dp))
             .fillMaxWidth()
             .padding(16.dp),
@@ -38,7 +43,7 @@ fun AlarmTime(
                 modifier = Modifier
                     .background(Color.LightGray, RoundedCornerShape(10.dp))
                     .padding(vertical = 16.dp, horizontal = 38.dp),
-                text = hour,
+                text = hour.toTimeStringFormat(),
                 style = MaterialTheme.typography.displayLarge
             )
             Spacer(modifier = Modifier.width(10.dp))
@@ -51,7 +56,7 @@ fun AlarmTime(
                 modifier = Modifier
                     .background(Color.LightGray, RoundedCornerShape(10.dp))
                     .padding(vertical = 16.dp, horizontal = 38.dp),
-                text = minutes,
+                text = minutes.toTimeStringFormat(),
                 style = MaterialTheme.typography.displayLarge
             )
         }
@@ -60,5 +65,15 @@ fun AlarmTime(
             text = description,
             style = MaterialTheme.typography.labelLarge
         )
+    }
+}
+
+fun Int.toTimeStringFormat(): String {
+    return if (this == 0) {
+        "00"
+    } else if (this < 10) {
+        "0$this"
+    } else {
+        this.toString()
     }
 }

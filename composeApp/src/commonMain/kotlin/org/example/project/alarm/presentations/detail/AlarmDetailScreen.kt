@@ -23,6 +23,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -31,16 +32,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import kotlinx.datetime.Clock
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
 import org.example.project.alarm.presentations.AlarmsAction
 import org.example.project.alarm.presentations.AlarmsState
 import org.example.project.alarm.presentations.detail.component.AlarmName
 import org.example.project.alarm.presentations.detail.component.AlarmNameDialog
 import org.example.project.alarm.presentations.detail.component.AlarmTime
+import org.example.project.alarm.presentations.detail.component.AlarmTimePickerDialog
 import org.example.project.alarm.presentations.model.AlarmUI
-import org.example.project.alarm.presentations.model.DisplayableDateTime
 
 @Composable
 fun AlarmDetailScreen(
@@ -50,6 +48,9 @@ fun AlarmDetailScreen(
     modifier: Modifier = Modifier
 ) {
     var isDialogShown by rememberSaveable {
+        mutableStateOf(false)
+    }
+    var showTimePicker by remember {
         mutableStateOf(false)
     }
     Column(
@@ -65,6 +66,7 @@ fun AlarmDetailScreen(
         ) {
             Box(modifier = Modifier
                 .clickable {
+                    onAction.invoke(AlarmsAction.OnAlarmClear)
                     navController.popBackStack()
                 }
                 .wrapContentSize()
@@ -86,22 +88,19 @@ fun AlarmDetailScreen(
                 onAction(
                     AlarmsAction.OnAlarmsCreate(
                         alarmUI = AlarmUI(
-                            name = "test alarm",
-                            hourDisplay = DisplayableDateTime(
-                                Clock.System.now().toLocalDateTime(TimeZone.UTC), ""
-                            ),
-                            countDownDisplay = DisplayableDateTime(
-                                Clock.System.now().toLocalDateTime(TimeZone.UTC), ""
-                            )
+                            name = "test alarm"
                         )
                     )
                 )
             }
         }
         AlarmTime(
-            hour = "16",
-            minutes = "45",
-            description = "Alarm in 7h 15 min"
+            hour = alarmState.selectedAlarms?.hour ?: 0,
+            minutes = alarmState.selectedAlarms?.minute ?: 0,
+            description = "Alarm in 7h 15 min",
+            onClick = {
+                showTimePicker = true
+            }
         )
         Spacer(modifier = Modifier.height(16.dp))
         AlarmName(
@@ -110,7 +109,7 @@ fun AlarmDetailScreen(
                 isDialogShown = true
             }
         )
-        if(isDialogShown){
+        if (isDialogShown) {
             AlarmNameDialog(
                 name = alarmState.selectedAlarms?.name.orEmpty(),
                 onSave = {
@@ -119,6 +118,17 @@ fun AlarmDetailScreen(
                 },
                 onDismissRequest = {
                     isDialogShown = false
+                }
+            )
+        }
+        if (showTimePicker) {
+            AlarmTimePickerDialog(
+                onDismiss = {
+                    showTimePicker = false
+                },
+                onConfirm = { hour, minute ->
+                    onAction.invoke(AlarmsAction.UpdateAlarmTime(hour, minute))
+                    showTimePicker = false
                 }
             )
         }

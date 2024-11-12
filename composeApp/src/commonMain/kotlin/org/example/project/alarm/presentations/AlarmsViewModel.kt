@@ -1,6 +1,5 @@
 package org.example.project.alarm.presentations
 
-import androidx.compose.ui.text.intl.Locale
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -8,12 +7,8 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import kotlinx.datetime.Clock
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
 import org.example.project.alarm.domain.AlarmDataSource
 import org.example.project.alarm.presentations.model.AlarmUI
-import org.example.project.alarm.presentations.model.DisplayableDateTime
 
 class AlarmsViewModel(
     private val alarmDataSource: AlarmDataSource
@@ -30,7 +25,7 @@ class AlarmsViewModel(
 
     fun onAction(action: AlarmsAction) {
         when (action) {
-            is AlarmsAction.OnAlarmsClick -> {
+            is AlarmsAction.OnAlarmClick -> {
                 selectAlarm(alarmUI = action.alarmUI)
             }
 
@@ -48,6 +43,14 @@ class AlarmsViewModel(
 
             is AlarmsAction.UpdateAlarmName -> {
                 updateAlarmName(action.name)
+            }
+
+            is AlarmsAction.UpdateAlarmTime -> {
+                updateAlarmTime(action.hour, action.minute)
+            }
+
+            is AlarmsAction.OnAlarmClear -> {
+                clearAlarm()
             }
         }
     }
@@ -77,28 +80,36 @@ class AlarmsViewModel(
             val selectedAlarms = it.selectedAlarms
             // Only update if `name` has changed
             if (selectedAlarms == null) {
-                it.copy(
-                    selectedAlarms = AlarmUI(
-                        name = name,
-                        hourDisplay = DisplayableDateTime(
-                            Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()),
-                            "formatted"
-                        ),
-                        countDownDisplay = DisplayableDateTime(
-                            Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()),
-                            "formatted"
-                        ),
-
-                        )
-                )
+                it.copy(selectedAlarms = AlarmUI(name = name))
             } else if (selectedAlarms.name != name) {
                 it.copy(
-                    selectedAlarms = selectedAlarms?.copy(name = name)
+                    selectedAlarms = selectedAlarms.copy(name = name)
                 )
             } else {
                 it
             }
 
+        }
+    }
+
+    private fun updateAlarmTime(hour: Int, minute: Int) {
+        _state.update {
+            val selectedAlarms = it.selectedAlarms
+            if (selectedAlarms == null) {
+                it.copy(selectedAlarms = AlarmUI(hour = hour, minute = minute))
+            } else if (selectedAlarms.hour != hour || selectedAlarms.minute != minute) {
+                it.copy(
+                    selectedAlarms = selectedAlarms.copy(hour = hour, minute = minute)
+                )
+            } else {
+                it
+            }
+        }
+    }
+
+    private fun clearAlarm() {
+        _state.update {
+            it.copy(selectedAlarms = null)
         }
     }
 }

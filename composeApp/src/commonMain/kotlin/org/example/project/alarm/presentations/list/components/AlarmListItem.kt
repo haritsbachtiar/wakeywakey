@@ -46,7 +46,7 @@ fun AlarmListItem(
                     verticalAlignment = Alignment.Bottom
                 ) {
                     Text(
-                        text = alarm.hourDisplay.formatted,
+                        text = "16:45",
                         style = MaterialTheme.typography.displayMedium
                     )
                     Spacer(modifier = Modifier.width(4.dp))
@@ -57,7 +57,7 @@ fun AlarmListItem(
                 }
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    alarm.countDownDisplay.formatted,
+                    "Alarm in 7h 15 min",
                     style = MaterialTheme.typography.labelLarge
                 )
             }
