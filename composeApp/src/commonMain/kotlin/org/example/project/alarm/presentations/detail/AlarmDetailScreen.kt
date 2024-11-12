@@ -30,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
@@ -43,6 +44,7 @@ import org.example.project.alarm.presentations.model.DisplayableDateTime
 
 @Composable
 fun AlarmDetailScreen(
+    navController: NavController,
     alarmState: AlarmsState,
     onAction: (action: AlarmsAction) -> Unit,
     modifier: Modifier = Modifier
@@ -63,7 +65,7 @@ fun AlarmDetailScreen(
         ) {
             Box(modifier = Modifier
                 .clickable {
-                    /** Trigger action here i.e. close the screen */
+                    navController.popBackStack()
                 }
                 .wrapContentSize()
                 .background(color = Color.LightGray, shape = RoundedCornerShape(4.dp))) {

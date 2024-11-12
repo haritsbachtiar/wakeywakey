@@ -87,10 +87,12 @@ fun WakeyWakeyApp(
             }
             composable(route = WakeyWakeyScreen.AlarmDetailScreen.name) {
                 AlarmDetailScreen(
+                    navController = navController,
                     alarmState = alarmState,
                     onAction = { action: AlarmsAction ->
                         alarmsViewModel.onAction(action)
-                    })
+                    }
+                )
             }
             composable(route = WakeyWakeyScreen.AlarmTriggerScreen.name) {
 
