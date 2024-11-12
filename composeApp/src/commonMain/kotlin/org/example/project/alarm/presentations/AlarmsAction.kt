@@ -7,4 +7,5 @@ sealed interface AlarmsAction {
     data class OnAlarmsCreate(val alarmUI: AlarmUI): AlarmsAction
     data class OnAlarmsUpdate(val alarmUI: AlarmUI): AlarmsAction
     data class OnAlarmsDelete(val alarmUI: AlarmUI): AlarmsAction
+    data class UpdateAlarmName(val name: String): AlarmsAction
 }

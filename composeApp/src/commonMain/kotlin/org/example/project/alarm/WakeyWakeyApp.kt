@@ -56,13 +56,15 @@ fun WakeyWakeyApp(
             )
         },
         floatingActionButton = {
-            FloatingActionButton(
-                onClick = {
-                    navController.navigate(WakeyWakeyScreen.AlarmDetailScreen.name)
-                },
-                shape = CircleShape,
-            ) {
-                Icon(Icons.Filled.Add, "Large floating action button")
+            if (currentScreen.name == WakeyWakeyScreen.AlarmListScreen.name) {
+                FloatingActionButton(
+                    onClick = {
+                        navController.navigate(WakeyWakeyScreen.AlarmDetailScreen.name)
+                    },
+                    shape = CircleShape,
+                ) {
+                    Icon(Icons.Filled.Add, "Large floating action button")
+                }
             }
         },
         floatingActionButtonPosition = FabPosition.Center

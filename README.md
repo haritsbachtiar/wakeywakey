@@ -11,10 +11,22 @@ This is a Kotlin Multiplatform project targeting Android, iOS.
   you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
 
 # TODO LIST
-  - SplashScreen [Done]
-  - AlarmListScreen
-  - AlarmDetailScreen
+  - SplashScreen [DONE]
+  - Setup Realm DB [DONE]
+  - Setup Koin Injection [DONE]
+  - Setup Theme [WIP]
+  - AlarmListScreen [WIP]
+    - Create UI [DONE]
+    - Integrate With Data Flow
+  - AlarmDetailScreen [WIP]
+    - Create UI [DONE]
+    - Create Alarm Name Dialog [DONE]
+    - Implement Time Slider
+    - Handle Save Button State
+    - Handle Back Navigation
+    - Integration With Data Flow [WIP]
   - AlarmTriggerScreen
+    - Setup Alarm Service Manager
 
 
 Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…

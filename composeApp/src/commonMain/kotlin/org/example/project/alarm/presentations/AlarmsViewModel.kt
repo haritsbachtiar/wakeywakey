@@ -1,5 +1,6 @@
 package org.example.project.alarm.presentations
 
+import androidx.compose.ui.text.intl.Locale
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -7,8 +8,12 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.datetime.Clock
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import org.example.project.alarm.domain.AlarmDataSource
 import org.example.project.alarm.presentations.model.AlarmUI
+import org.example.project.alarm.presentations.model.DisplayableDateTime
 
 class AlarmsViewModel(
     private val alarmDataSource: AlarmDataSource
@@ -40,6 +45,10 @@ class AlarmsViewModel(
             is AlarmsAction.OnAlarmsUpdate -> {
                 updateAlarm(alarmUI = action.alarmUI)
             }
+
+            is AlarmsAction.UpdateAlarmName -> {
+                updateAlarmName(action.name)
+            }
         }
     }
 
@@ -48,7 +57,7 @@ class AlarmsViewModel(
     }
 
     private fun createAlarm(alarmUI: AlarmUI) {
-    //    alarmDataSource.writeAlarm(alarmUI.name, alarmUI.hourDisplay)
+        //    alarmDataSource.writeAlarm(alarmUI.name, alarmUI.hourDisplay)
     }
 
     private fun updateAlarm(alarmUI: AlarmUI) {
@@ -61,5 +70,35 @@ class AlarmsViewModel(
 
     private fun loadAlarms() {
         // TODO LOAD ALARMS
+    }
+
+    private fun updateAlarmName(name: String) {
+        _state.update {
+            val selectedAlarms = it.selectedAlarms
+            // Only update if `name` has changed
+            if (selectedAlarms == null) {
+                it.copy(
+                    selectedAlarms = AlarmUI(
+                        name = name,
+                        hourDisplay = DisplayableDateTime(
+                            Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()),
+                            "formatted"
+                        ),
+                        countDownDisplay = DisplayableDateTime(
+                            Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()),
+                            "formatted"
+                        ),
+
+                        )
+                )
+            } else if (selectedAlarms.name != name) {
+                it.copy(
+                    selectedAlarms = selectedAlarms?.copy(name = name)
+                )
+            } else {
+                it
+            }
+
+        }
     }
 }

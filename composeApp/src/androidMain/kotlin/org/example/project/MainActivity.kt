@@ -12,8 +12,10 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import org.example.project.alarm.presentations.AlarmsState
 import org.example.project.core.presentation.theme.AlarmTheme
 import org.example.project.alarm.presentations.detail.AlarmDetailScreen
+import org.example.project.alarm.presentations.detail.component.AlarmNameDialog
 import org.example.project.alarm.presentations.model.AlarmUI
 import org.example.project.alarm.presentations.model.DisplayableDateTime
 
@@ -65,9 +67,16 @@ fun AlarmListPreview() {
             ),
         ),
     )
-   /* AlarmTheme {
-        AlarmDetailScreen(
-            modifier = Modifier.background(Color.Gray)
+    AlarmTheme {
+//        AlarmDetailScreen(
+//            AlarmsState(),
+//            {},
+//            modifier = Modifier.background(Color.Gray)
+//        )
+        AlarmNameDialog(
+            name = "works",
+            onSave = {},
+            onDismissRequest = { /*TODO*/ }
         )
-    }*/
+    }
 }
