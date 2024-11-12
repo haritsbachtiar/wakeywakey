@@ -20,7 +20,7 @@ navigationCompose = "2.8.0-alpha10"
 kotlinx-datetime = "0.6.1"
 assertk = "0.28.1"
 coreKtx = "1.6.1"
-composeTest = "1.6.8"
+composeTest = "1.7.5"
 
 [libraries]
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }

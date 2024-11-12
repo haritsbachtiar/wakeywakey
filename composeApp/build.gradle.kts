@@ -63,9 +63,6 @@ kotlin {
             implementation(libs.kotlin.test)
             implementation(kotlin("test-annotations-common"))
             implementation(libs.assertk)
-
-            @OptIn(ExperimentalComposeLibrary::class)
-            implementation(compose.uiTest)
         }
     }
 }
