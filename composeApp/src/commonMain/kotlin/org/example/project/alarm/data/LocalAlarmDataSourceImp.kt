@@ -15,6 +15,9 @@ class LocalAlarmDataSourceImp(
             this.copyToRealm(
                 instance = AlarmTable().apply {
                     this.name = alarmName
+                    this.hour = hour
+                    this.minute = minute
+                    this.isActive = isActive
                 },
                 updatePolicy = UpdatePolicy.ALL
             )
@@ -27,7 +30,9 @@ class LocalAlarmDataSourceImp(
 
             if(existingAlarm != null) {
                 existingAlarm.name = alarmTable.name
-
+                existingAlarm.hour = alarmTable.hour
+                existingAlarm.minute = alarmTable.minute
+                existingAlarm.isActive = alarmTable.isActive
                 copyToRealm(existingAlarm, updatePolicy = UpdatePolicy.ALL)
             }
         }
