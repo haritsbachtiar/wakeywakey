@@ -16,18 +16,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import org.example.project.alarm.presentations.AlarmsAction
 import org.example.project.alarm.presentations.model.AlarmUI
 
 @Composable
 fun AlarmListItem(
     alarm: AlarmUI,
-    onCardClick: (AlarmUI) -> Unit,
+    onCardClick: (AlarmsAction) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
-        modifier = modifier,
+        modifier = modifier.fillMaxWidth(),
         onClick = {
-            onCardClick.invoke(alarm)
+            onCardClick.invoke(AlarmsAction.OnAlarmClick(alarm))
         }
     ) {
         Row(
@@ -46,18 +47,18 @@ fun AlarmListItem(
                     verticalAlignment = Alignment.Bottom
                 ) {
                     Text(
-                        text = "16:45",
+                        text = "${alarm.hour}:${alarm.minute}",
                         style = MaterialTheme.typography.displayMedium
                     )
-                    Spacer(modifier = Modifier.width(4.dp))
-                    Text(
-                        text = "AM",
-                        style = MaterialTheme.typography.headlineSmall
-                    )
+//                    Spacer(modifier = Modifier.width(4.dp))
+//                    Text(
+//                        text = "AM",
+//                        style = MaterialTheme.typography.headlineSmall
+//                    )
                 }
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    "Alarm in 7h 15 min",
+                    "---",
                     style = MaterialTheme.typography.labelLarge
                 )
             }

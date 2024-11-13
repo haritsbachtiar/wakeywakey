@@ -1,5 +1,6 @@
 package org.example.project.alarm
 
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -20,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -74,13 +76,12 @@ fun WakeyWakeyApp(
             startDestination = WakeyWakeyScreen.AlarmListScreen.name,
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(innerPadding)
         ) {
             composable(route = WakeyWakeyScreen.AlarmListScreen.name) {
                 AlarmListScreen(
                     alarms = alarmState.alarms,
-                    onCardClick = {
+                    onCardClick = { action: AlarmsAction ->
+                        alarmsViewModel.onAction(action)
                         navController.navigate(WakeyWakeyScreen.AlarmDetailScreen.name)
                     }
                 )
@@ -91,7 +92,13 @@ fun WakeyWakeyApp(
                     alarmState = alarmState,
                     onAction = { action: AlarmsAction ->
                         alarmsViewModel.onAction(action)
-                    }
+                        if(action is AlarmsAction.OnAlarmsCreate) {
+                            navController.navigateUp()
+                        }
+                    },
+                    modifier = Modifier
+                        .verticalScroll(rememberScrollState())
+                        .padding(innerPadding)
                 )
             }
             composable(route = WakeyWakeyScreen.AlarmTriggerScreen.name) {

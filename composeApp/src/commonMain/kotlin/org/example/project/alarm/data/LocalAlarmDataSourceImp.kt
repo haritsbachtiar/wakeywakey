@@ -12,10 +12,19 @@ class LocalAlarmDataSourceImp(
 ) : AlarmDataSource {
     override suspend fun writeAlarm(alarmTable: AlarmTable) {
         realmDbClient.realm.write {
-            this.copyToRealm(
-                instance = alarmTable,
-                updatePolicy = UpdatePolicy.ALL
-            )
+            val existingAlarm = findLatest(alarmTable)
+            if(existingAlarm != null) {
+                existingAlarm.name = alarmTable.name
+                existingAlarm.hour = alarmTable.hour
+                existingAlarm.minute = alarmTable.minute
+                existingAlarm.isActive = alarmTable.isActive
+                copyToRealm(existingAlarm, updatePolicy = UpdatePolicy.ALL)
+            } else {
+                copyToRealm(
+                    instance = alarmTable,
+                    updatePolicy = UpdatePolicy.ALL
+                )
+            }
         }
     }
 
