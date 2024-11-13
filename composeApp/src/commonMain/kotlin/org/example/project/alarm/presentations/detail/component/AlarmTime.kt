@@ -65,17 +65,15 @@ fun AlarmTime(
             )
         }
         Spacer(modifier = Modifier.height(16.dp))
-        val remainingTime = remainingTime();
+        val remainingTime = remainingTime(hour, minutes);
         Text(
-            text = "Alarm in $remainingTime()",
+            text = "Alarm in $remainingTime",
             style = MaterialTheme.typography.labelLarge
         )
     }
 }
 
-fun remainingTime(): String {
-    val hoursLeft = 24
-    val minutesLeft = 2
+fun remainingTime(hoursLeft: Int, minutesLeft: Int): String {
     return StringBuilder()
         .append(hoursLeft) // ascii code 32 or space
         .append("h ")
@@ -84,7 +82,7 @@ fun remainingTime(): String {
         .toString()
 }
 
-fun Int.toTimeStringFormat(): String {
+private fun Int.toTimeStringFormat(): String {
     return if (this == 0) {
         "00"
     } else if (this < 10) {
