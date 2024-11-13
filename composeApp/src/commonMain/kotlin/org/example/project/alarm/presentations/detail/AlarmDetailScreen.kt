@@ -90,7 +90,7 @@ fun AlarmDetailScreen(
                     onAction.invoke(action)
                 }
             ) {
-                Text("Save", color = Color.White)
+                Text("Save (commented for bug)", color = Color.White)
             }
         }
         AlarmTime(

@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import kotlinx.datetime.Clock
 
 @Composable
 fun AlarmTime(
@@ -74,6 +75,8 @@ fun AlarmTime(
 }
 
 fun remainingTime(hoursLeft: Int, minutesLeft: Int): String {
+    println("currentTime")
+    println(Clock.System.now())
     return StringBuilder()
         .append(hoursLeft) // ascii code 32 or space
         .append("h ")
