@@ -84,20 +84,20 @@ fun AlarmDetailScreen(
                 modifier = Modifier.clip(RoundedCornerShape(100)),
                 onClick = {}
             ) {
-                Text("Save", color = Color.White)
-                onAction(
-                    AlarmsAction.OnAlarmsCreate(
-                        alarmUI = AlarmUI(
-                            name = "test alarm"
-                        )
-                    )
-                )
+                Text("Save (commented for bug)", color = Color.White)
+//                onAction(
+//                    AlarmsAction.OnAlarmsCreate(
+//                        alarmUI = AlarmUI(
+//                            name = "test alarm"
+//                        )
+//                    )
+//                )
             }
         }
         AlarmTime(
             hour = alarmState.selectedAlarms?.hour ?: 0,
             minutes = alarmState.selectedAlarms?.minute ?: 0,
-            description = "Alarm in 7h 15 min",
+            description = "Alarm in --",
             onClick = {
                 showTimePicker = true
             }

@@ -13,6 +13,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,6 +28,8 @@ fun AlarmTime(
     description: String,
     onClick: () -> Unit
 ) {
+    val countdownState = remember { mutableStateOf(description) }
+
     Column(
         modifier = modifier
             .clickable {
@@ -61,11 +65,23 @@ fun AlarmTime(
             )
         }
         Spacer(modifier = Modifier.height(16.dp))
+        val remainingTime = remainingTime();
         Text(
-            text = description,
+            text = "Alarm in $remainingTime()",
             style = MaterialTheme.typography.labelLarge
         )
     }
+}
+
+fun remainingTime(): String {
+    val hoursLeft = 24
+    val minutesLeft = 2
+    return StringBuilder()
+        .append(hoursLeft) // ascii code 32 or space
+        .append("h ")
+        .append(minutesLeft)
+        .append(" mins")
+        .toString()
 }
 
 fun Int.toTimeStringFormat(): String {
