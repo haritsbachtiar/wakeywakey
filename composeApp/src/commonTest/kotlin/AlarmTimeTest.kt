@@ -11,6 +11,8 @@ class AlarmTimeTest {
 
     @Test
     fun testCheckRemainingTime() {
-        assertThat(remainingTime(24,2)).isEqualTo("24h 2 mins")
+
+        assertThat(remainingTime(24,2))
+            .isEqualTo("24h 2 mins")
     }
 }

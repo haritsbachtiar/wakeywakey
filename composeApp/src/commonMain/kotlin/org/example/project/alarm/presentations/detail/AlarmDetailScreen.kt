@@ -82,16 +82,17 @@ fun AlarmDetailScreen(
             Button(
                 contentPadding = PaddingValues(horizontal = 32.dp, vertical = 8.dp),
                 modifier = Modifier.clip(RoundedCornerShape(100)),
-                onClick = {}
+                onClick = {
+                    onAction(
+                        AlarmsAction.OnAlarmsCreate(
+                            alarmUI = AlarmUI(
+                                name = "test alarm"
+                            )
+                        )
+                    )
+                }
             ) {
-                Text("Save (commented for bug)", color = Color.White)
-//                onAction(
-//                    AlarmsAction.OnAlarmsCreate(
-//                        alarmUI = AlarmUI(
-//                            name = "test alarm"
-//                        )
-//                    )
-//                )
+                Text("Save", color = Color.White)
             }
         }
         AlarmTime(
