@@ -33,7 +33,7 @@ class AlarmsViewModel(
             }
 
             is AlarmsAction.OnAlarmsCreate -> {
-                createAlarm(alarmUI = action.alarmUI)
+                createAlarm()
             }
 
             is AlarmsAction.OnAlarmsDelete -> {
@@ -62,12 +62,13 @@ class AlarmsViewModel(
         _alarmState.update { it.copy(selectedAlarms = alarmUI) }
     }
 
-    private fun createAlarm(alarmUI: AlarmUI) {
+    private fun createAlarm() {
+        val selectedAlarm = _alarmState.value.selectedAlarms ?: AlarmUI()
         val alarmTable = AlarmTable()
-        alarmTable.name = alarmUI.name
-        alarmTable.minute = alarmUI.minute
-        alarmTable.hour = alarmUI.hour
-        alarmTable.isActive = alarmUI.isActive
+        alarmTable.name = selectedAlarm.name
+        alarmTable.minute = selectedAlarm.minute
+        alarmTable.hour = selectedAlarm.hour
+        alarmTable.isActive = selectedAlarm.isActive
 
         viewModelScope.launch {
             alarmDataSource.writeAlarm(alarmTable)
