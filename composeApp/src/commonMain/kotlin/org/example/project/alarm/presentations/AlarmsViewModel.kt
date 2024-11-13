@@ -4,17 +4,20 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import org.example.project.alarm.data.tables.AlarmTable
 import org.example.project.alarm.domain.AlarmDataSource
 import org.example.project.alarm.presentations.model.AlarmUI
 
 class AlarmsViewModel(
     private val alarmDataSource: AlarmDataSource
 ) : ViewModel() {
-    private var _state = MutableStateFlow(AlarmsState())
-    val state = _state
+    private var _alarmState = MutableStateFlow(AlarmsState())
+    val alarmState = _alarmState
         .onStart { loadAlarms() }
         .stateIn(
             viewModelScope,
@@ -56,27 +59,77 @@ class AlarmsViewModel(
     }
 
     private fun selectAlarm(alarmUI: AlarmUI) {
-        _state.update { it.copy(selectedAlarms = alarmUI) }
+        _alarmState.update { it.copy(selectedAlarms = alarmUI) }
     }
 
     private fun createAlarm(alarmUI: AlarmUI) {
-        //    alarmDataSource.writeAlarm(alarmUI.name, alarmUI.hourDisplay)
+        val alarmTable = AlarmTable()
+        alarmTable.name = alarmUI.name
+        alarmTable.minute = alarmUI.minute
+        alarmTable.hour = alarmUI.hour
+        alarmTable.isActive = alarmUI.isActive
+
+        viewModelScope.launch {
+            alarmDataSource.writeAlarm(alarmTable)
+        }
     }
 
     private fun updateAlarm(alarmUI: AlarmUI) {
-        // TODO
+        viewModelScope.launch {
+            val alarmTable = AlarmTable()
+            alarmTable.name = alarmUI.name
+            alarmTable.minute = alarmUI.minute
+            alarmTable.hour = alarmUI.hour
+            alarmTable.isActive = alarmUI.isActive
+
+            viewModelScope.launch {
+                alarmDataSource.updateAlarm(alarmTable)
+            }
+        }
     }
 
-    private fun deleteAlarm(alarmUI: Any) {
-        // TODO
+    private fun deleteAlarm(alarmUI: AlarmUI) {
+        viewModelScope.launch {
+            val alarmTable = AlarmTable()
+            alarmTable.name = alarmUI.name
+            alarmTable.minute = alarmUI.minute
+            alarmTable.hour = alarmUI.hour
+            alarmTable.isActive = alarmUI.isActive
+
+            viewModelScope.launch {
+                alarmDataSource.deleteAlarms(alarmTable)
+            }
+        }
     }
 
     private fun loadAlarms() {
-        // TODO LOAD ALARMS
+        viewModelScope.launch {
+            _alarmState.update { alarmsState ->
+                alarmsState.copy(
+                    isLoading = true
+                )
+            }
+
+            alarmDataSource.getAlarms().collectLatest { listOfAlarms ->
+                _alarmState.update { alarmsState ->
+                    alarmsState.copy(
+                        isLoading = false,
+                        alarms = listOfAlarms.map { alarmTable ->
+                            AlarmUI(
+                                name = alarmTable.name,
+                                minute = alarmTable.minute,
+                                hour = alarmTable.hour,
+                                isActive = alarmTable.isActive
+                            )
+                        }
+                    )
+                }
+            }
+        }
     }
 
     private fun updateAlarmName(name: String) {
-        _state.update {
+        _alarmState.update {
             val selectedAlarms = it.selectedAlarms
             // Only update if `name` has changed
             if (selectedAlarms == null) {
@@ -93,7 +146,7 @@ class AlarmsViewModel(
     }
 
     private fun updateAlarmTime(hour: Int, minute: Int) {
-        _state.update {
+        _alarmState.update {
             val selectedAlarms = it.selectedAlarms
             if (selectedAlarms == null) {
                 it.copy(selectedAlarms = AlarmUI(hour = hour, minute = minute))
@@ -108,7 +161,7 @@ class AlarmsViewModel(
     }
 
     private fun clearAlarm() {
-        _state.update {
+        _alarmState.update {
             it.copy(selectedAlarms = null)
         }
     }

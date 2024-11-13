@@ -10,15 +10,10 @@ import org.example.project.core.data.local_client.RealmDbClient
 class LocalAlarmDataSourceImp(
     private val realmDbClient: RealmDbClient
 ) : AlarmDataSource {
-    override suspend fun writeAlarm(alarmTime: String, alarmName: String) {
+    override suspend fun writeAlarm(alarmTable: AlarmTable) {
         realmDbClient.realm.write {
             this.copyToRealm(
-                instance = AlarmTable().apply {
-                    this.name = alarmName
-                    this.hour = hour
-                    this.minute = minute
-                    this.isActive = isActive
-                },
+                instance = alarmTable,
                 updatePolicy = UpdatePolicy.ALL
             )
         }

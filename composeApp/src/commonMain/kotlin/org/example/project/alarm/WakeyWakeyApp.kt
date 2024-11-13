@@ -44,7 +44,7 @@ fun WakeyWakeyApp(
     )
 
     val alarmsViewModel = koinViewModel<AlarmsViewModel>()
-    val alarmState by alarmsViewModel.state.collectAsStateWithLifecycle()
+    val alarmState by alarmsViewModel.alarmState.collectAsStateWithLifecycle()
 
 
     Scaffold(
