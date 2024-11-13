@@ -21,7 +21,7 @@ class AlarmsViewModel(
         .onStart { loadAlarms() }
         .stateIn(
             viewModelScope,
-            SharingStarted.WhileSubscribed(5000L),
+            SharingStarted.WhileSubscribed(5_000L),
             AlarmsState()
         )
 

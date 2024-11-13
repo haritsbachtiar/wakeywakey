@@ -79,7 +79,7 @@ fun WakeyWakeyApp(
         ) {
             composable(route = WakeyWakeyScreen.AlarmListScreen.name) {
                 AlarmListScreen(
-                    alarms = listOf(),
+                    alarms = alarmState.alarms,
                     onCardClick = {
                         navController.navigate(WakeyWakeyScreen.AlarmDetailScreen.name)
                     }
