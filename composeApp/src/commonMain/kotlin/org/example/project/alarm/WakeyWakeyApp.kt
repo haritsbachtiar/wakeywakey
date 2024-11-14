@@ -27,6 +27,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import kotlinx.datetime.Clock
 import org.example.project.alarm.presentations.AlarmsAction
 import org.example.project.alarm.presentations.AlarmsViewModel
 import org.example.project.alarm.presentations.WakeyWakeyScreen
@@ -71,6 +72,7 @@ fun WakeyWakeyApp(
         },
         floatingActionButtonPosition = FabPosition.Center
     ) { innerPadding ->
+        Clock
         NavHost(
             navController = navController,
             startDestination = WakeyWakeyScreen.AlarmListScreen.name,
@@ -79,8 +81,9 @@ fun WakeyWakeyApp(
         ) {
             composable(route = WakeyWakeyScreen.AlarmListScreen.name) {
                 AlarmListScreen(
+                    modifier = Modifier.padding(innerPadding),
                     alarms = alarmState.alarms,
-                    onCardClick = { action: AlarmsAction ->
+                    onAction = { action: AlarmsAction ->
                         alarmsViewModel.onAction(action)
                         navController.navigate(WakeyWakeyScreen.AlarmDetailScreen.name)
                     }
@@ -92,8 +95,14 @@ fun WakeyWakeyApp(
                     alarmState = alarmState,
                     onAction = { action: AlarmsAction ->
                         alarmsViewModel.onAction(action)
-                        if(action is AlarmsAction.OnAlarmsCreate) {
-                            navController.navigateUp()
+                        when (action) {
+                            is AlarmsAction.OnAlarmsCreate,
+                            is AlarmsAction.OnAlarmsUpdate -> {
+                                navController.navigateUp()
+
+                            }
+
+                            else -> Unit
                         }
                     },
                     modifier = Modifier

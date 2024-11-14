@@ -23,18 +23,16 @@ import org.example.project.alarm.presentations.model.AlarmUI
 @Composable
 fun AlarmListScreen(
     alarms: List<AlarmUI>,
-    onCardClick: (AlarmsAction) -> Unit,
+    onAction: (AlarmsAction) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(
-        modifier = modifier.fillMaxSize().padding(16.dp)
+        modifier = modifier.fillMaxSize().padding(horizontal = 16.dp)
     ) {
         if (alarms.isNotEmpty()) {
-            LazyColumn(
-                modifier = Modifier.fillMaxSize()
-            ) {
+            LazyColumn {
                 items(alarms) {
-                    AlarmListItem(it, onCardClick)
+                    AlarmListItem(it, onAction)
                     if (it != alarms.last()) {
                         Spacer(modifier = Modifier.height(16.dp))
                     }
@@ -42,7 +40,6 @@ fun AlarmListScreen(
             }
         } else {
             Column(
-                modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {

@@ -83,9 +83,12 @@ fun AlarmDetailScreen(
                 contentPadding = PaddingValues(horizontal = 32.dp, vertical = 8.dp),
                 modifier = Modifier.clip(RoundedCornerShape(100)),
                 onClick = {
-                    onAction(
+                    val action = if(alarmState.selectedAlarms?._id == null) {
                         AlarmsAction.OnAlarmsCreate
-                    )
+                    }else{
+                        AlarmsAction.OnAlarmsUpdate
+                    }
+                    onAction.invoke(action)
                 }
             ) {
                 Text("Save", color = Color.White)

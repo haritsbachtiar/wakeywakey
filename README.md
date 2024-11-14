@@ -18,6 +18,7 @@ This is a Kotlin Multiplatform project targeting Android, iOS.
   - AlarmListScreen [WIP]
     - Create UI [DONE]
     - Integrate With Data Flow [DONE]
+    - Swipeable Item List with Delete Button [WIP]
     - Update Countdown Text
   - AlarmDetailScreen [WIP]
     - Create UI [DONE]
@@ -25,7 +26,8 @@ This is a Kotlin Multiplatform project targeting Android, iOS.
     - Implement Time Slider [DONE]
     - Handle Save Button State [DONE]
     - Handle Back Navigation [DONE]
-    - Integration With Data Flow [WIP]
+    - Integration With Data Flow [DONE]
+    - Update Countdown Text
   - AlarmTriggerScreen
     - Setup Alarm Service Manager
 

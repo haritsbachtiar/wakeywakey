@@ -9,9 +9,11 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.example.project.alarm.data.tables.AlarmTable
+import org.example.project.alarm.data.tables.AlarmRealmObject
 import org.example.project.alarm.domain.AlarmDataSource
 import org.example.project.alarm.presentations.model.AlarmUI
+import org.mongodb.kbson.BsonObjectId
+import org.mongodb.kbson.ObjectId
 
 class AlarmsViewModel(
     private val alarmDataSource: AlarmDataSource
@@ -41,7 +43,7 @@ class AlarmsViewModel(
             }
 
             is AlarmsAction.OnAlarmsUpdate -> {
-                updateAlarm(alarmUI = action.alarmUI)
+                updateAlarm()
             }
 
             is AlarmsAction.UpdateAlarmName -> {
@@ -63,42 +65,45 @@ class AlarmsViewModel(
     }
 
     private fun createAlarm() {
-        val selectedAlarm = _alarmState.value.selectedAlarms ?: AlarmUI()
-        val alarmTable = AlarmTable()
-        alarmTable.name = selectedAlarm.name
-        alarmTable.minute = selectedAlarm.minute
-        alarmTable.hour = selectedAlarm.hour
-        alarmTable.isActive = selectedAlarm.isActive
+        val selectedAlarmUI = _alarmState.value.selectedAlarms ?: AlarmUI()
+        val selectedAlarmRealmObject = AlarmRealmObject()
+        selectedAlarmRealmObject.name = selectedAlarmUI.name
+        selectedAlarmRealmObject.minute = selectedAlarmUI.minute
+        selectedAlarmRealmObject.hour = selectedAlarmUI.hour
+        selectedAlarmRealmObject.isActive = selectedAlarmUI.isActive
 
         viewModelScope.launch {
-            alarmDataSource.writeAlarm(alarmTable)
+            alarmDataSource.writeAlarm(selectedAlarmRealmObject)
         }
     }
 
-    private fun updateAlarm(alarmUI: AlarmUI) {
-        viewModelScope.launch {
-            val alarmTable = AlarmTable()
-            alarmTable.name = alarmUI.name
-            alarmTable.minute = alarmUI.minute
-            alarmTable.hour = alarmUI.hour
-            alarmTable.isActive = alarmUI.isActive
+    private fun updateAlarm() {
+        val selectedAlarmUI = _alarmState.value.selectedAlarms ?: AlarmUI()
+        if (selectedAlarmUI._id != null) {
+            val selectedAlarm = AlarmRealmObject()
+            selectedAlarm._id = selectedAlarmUI._id
+            selectedAlarm.name = selectedAlarmUI.name
+            selectedAlarm.minute = selectedAlarmUI.minute
+            selectedAlarm.hour = selectedAlarmUI.hour
+            selectedAlarm.isActive = selectedAlarmUI.isActive
 
             viewModelScope.launch {
-                alarmDataSource.updateAlarm(alarmTable)
+                alarmDataSource.updateAlarm(selectedAlarm)
             }
         }
     }
 
     private fun deleteAlarm(alarmUI: AlarmUI) {
-        viewModelScope.launch {
-            val alarmTable = AlarmTable()
-            alarmTable.name = alarmUI.name
-            alarmTable.minute = alarmUI.minute
-            alarmTable.hour = alarmUI.hour
-            alarmTable.isActive = alarmUI.isActive
+        if (alarmUI._id != null) {
+            val selectedAlarm = AlarmRealmObject()
+            selectedAlarm._id = alarmUI._id
+            selectedAlarm.name = alarmUI.name
+            selectedAlarm.minute = alarmUI.minute
+            selectedAlarm.hour = alarmUI.hour
+            selectedAlarm.isActive = alarmUI.isActive
 
             viewModelScope.launch {
-                alarmDataSource.deleteAlarms(alarmTable)
+                alarmDataSource.deleteAlarms(selectedAlarm)
             }
         }
     }
@@ -117,6 +122,7 @@ class AlarmsViewModel(
                         isLoading = false,
                         alarms = listOfAlarms.map { alarmTable ->
                             AlarmUI(
+                                _id = alarmTable._id,
                                 name = alarmTable.name,
                                 minute = alarmTable.minute,
                                 hour = alarmTable.hour,
