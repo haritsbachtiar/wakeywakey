@@ -1,6 +1,5 @@
 package org.example.project.alarm
 
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -21,7 +20,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -85,7 +83,12 @@ fun WakeyWakeyApp(
                     alarms = alarmState.alarms,
                     onAction = { action: AlarmsAction ->
                         alarmsViewModel.onAction(action)
-                        navController.navigate(WakeyWakeyScreen.AlarmDetailScreen.name)
+                        when(action) {
+                            is AlarmsAction.OnAlarmClick -> {
+                                navController.navigate(WakeyWakeyScreen.AlarmDetailScreen.name)
+                            }
+                            else -> Unit
+                        }
                     }
                 )
             }
