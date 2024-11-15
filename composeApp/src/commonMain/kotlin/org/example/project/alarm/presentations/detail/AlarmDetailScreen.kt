@@ -38,7 +38,6 @@ import org.example.project.alarm.presentations.detail.component.AlarmName
 import org.example.project.alarm.presentations.detail.component.AlarmNameDialog
 import org.example.project.alarm.presentations.detail.component.AlarmTime
 import org.example.project.alarm.presentations.detail.component.AlarmTimePickerDialog
-import org.example.project.alarm.presentations.model.AlarmUI
 
 @Composable
 fun AlarmDetailScreen(
@@ -123,6 +122,8 @@ fun AlarmDetailScreen(
         }
         if (showTimePicker) {
             AlarmTimePickerDialog(
+                initialHour = alarmState.selectedAlarms?.hour,
+                initialMinute = alarmState.selectedAlarms?.minute,
                 onDismiss = {
                     showTimePicker = false
                 },

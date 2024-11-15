@@ -20,12 +20,15 @@ import kotlinx.datetime.toLocalDateTime
 
 @Composable
 fun AlarmTimePickerDialog(
+    initialHour: Int?,
+    initialMinute: Int?,
     onDismiss: () -> Unit,
     onConfirm: (Int, Int) -> Unit
 ) {
+    val currentTime = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
     val state = rememberTimePickerState(
-        initialHour = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).hour,
-        initialMinute = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).minute,
+        initialHour = initialHour ?: currentTime.hour,
+        initialMinute = initialMinute ?: currentTime.minute,
         is24Hour = true
     )
     AlertDialog(
