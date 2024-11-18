@@ -17,14 +17,17 @@ This is a Kotlin Multiplatform project targeting Android, iOS.
   - Setup Theme [WIP]
   - AlarmListScreen [WIP]
     - Create UI [DONE]
-    - Integrate With Data Flow
+    - Integrate With Data Flow [DONE]
+    - Swipeable Item List with Delete Button [WIP]
+    - Update Countdown Text
   - AlarmDetailScreen [WIP]
     - Create UI [DONE]
     - Create Alarm Name Dialog [DONE]
-    - Implement Time Slider
-    - Handle Save Button State
-    - Handle Back Navigation
-    - Integration With Data Flow [WIP]
+    - Implement Time Slider [DONE]
+    - Handle Save Button State [DONE]
+    - Handle Back Navigation [DONE]
+    - Integration With Data Flow [DONE]
+    - Update Countdown Text
   - AlarmTriggerScreen
     - Setup Alarm Service Manager
 

@@ -38,7 +38,6 @@ import org.example.project.alarm.presentations.detail.component.AlarmName
 import org.example.project.alarm.presentations.detail.component.AlarmNameDialog
 import org.example.project.alarm.presentations.detail.component.AlarmTime
 import org.example.project.alarm.presentations.detail.component.AlarmTimePickerDialog
-import org.example.project.alarm.presentations.model.AlarmUI
 
 @Composable
 fun AlarmDetailScreen(
@@ -82,22 +81,22 @@ fun AlarmDetailScreen(
             Button(
                 contentPadding = PaddingValues(horizontal = 32.dp, vertical = 8.dp),
                 modifier = Modifier.clip(RoundedCornerShape(100)),
-                onClick = {}
+                onClick = {
+                    val action = if(alarmState.selectedAlarms?._id == null) {
+                        AlarmsAction.OnAlarmsCreate
+                    }else{
+                        AlarmsAction.OnAlarmsUpdate
+                    }
+                    onAction.invoke(action)
+                }
             ) {
                 Text("Save", color = Color.White)
-                onAction(
-                    AlarmsAction.OnAlarmsCreate(
-                        alarmUI = AlarmUI(
-                            name = "test alarm"
-                        )
-                    )
-                )
             }
         }
         AlarmTime(
             hour = alarmState.selectedAlarms?.hour ?: 0,
             minutes = alarmState.selectedAlarms?.minute ?: 0,
-            description = "Alarm in 7h 15 min",
+            description = "Alarm in --",
             onClick = {
                 showTimePicker = true
             }
@@ -123,6 +122,8 @@ fun AlarmDetailScreen(
         }
         if (showTimePicker) {
             AlarmTimePickerDialog(
+                initialHour = alarmState.selectedAlarms?.hour,
+                initialMinute = alarmState.selectedAlarms?.minute,
                 onDismiss = {
                     showTimePicker = false
                 },
