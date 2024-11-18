@@ -8,7 +8,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import kotlinx.datetime.LocalTime
 import org.example.project.alarm.data.AlarmScheduler
-import org.example.project.alarm.data.tables.AlarmTable
+import org.example.project.alarm.data.tables.AlarmRealmObject
 
 class AndroidAlarmScheduler(
     private val context: Context
@@ -17,7 +17,7 @@ class AndroidAlarmScheduler(
     private val alarmManager = context.getSystemService(AlarmManager::class.java)
 
     @RequiresApi(Build.VERSION_CODES.S)
-    override fun schedule(alarmItem: AlarmTable) {
+    override fun schedule(alarmItem: AlarmRealmObject) {
         val alarmTime = LocalTime(
             hour = alarmItem.hour,
             minute = alarmItem.minute,
@@ -41,7 +41,7 @@ class AndroidAlarmScheduler(
         }
     }
 
-    override fun cancel(alarmItem: AlarmTable) {
+    override fun cancel(alarmItem: AlarmRealmObject) {
         alarmManager.cancel(
             PendingIntent.getBroadcast(
                 context,

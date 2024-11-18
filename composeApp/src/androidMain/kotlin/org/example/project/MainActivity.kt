@@ -8,6 +8,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import org.example.project.alarm.presentations.detail.component.AlarmTimePickerDialog
+import org.example.project.alarm.presentations.trigger.AlarmTriggerScreen
 import org.example.project.core.presentation.theme.AlarmTheme
 
 class MainActivity : ComponentActivity() {
@@ -15,7 +16,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         installSplashScreen()
         setContent {
-            App()
+          //  App()
+            AlarmTriggerScreen(
+                alarmName = "Work Alarm",
+                alarmTime = "10:00"
+            ) {}
         }
     }
 }
@@ -39,9 +44,9 @@ fun AlarmListPreview() {
 //            onSave = {},
 //            onDismissRequest = { /*TODO*/ }
 //        )
-        AlarmTimePickerDialog(
+     /*   AlarmTimePickerDialog(
             onConfirm = { _, _ -> },
-            onDismiss = { /*TODO*/ }
-        )
+            onDismiss = { *//*TODO*//* }
+        )*/
     }
 }

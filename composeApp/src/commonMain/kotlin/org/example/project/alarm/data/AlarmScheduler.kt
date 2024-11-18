@@ -1,8 +1,8 @@
 package org.example.project.alarm.data
 
-import org.example.project.alarm.data.tables.AlarmTable
+import org.example.project.alarm.data.tables.AlarmRealmObject
 
 interface AlarmScheduler {
-    fun schedule(alarmItem: AlarmTable)
-    fun cancel(alarmItem: AlarmTable)
+    fun schedule(alarmItem: AlarmRealmObject)
+    fun cancel(alarmItem: AlarmRealmObject)
 }
