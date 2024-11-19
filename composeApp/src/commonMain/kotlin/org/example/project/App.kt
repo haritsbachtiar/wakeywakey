@@ -6,8 +6,8 @@ import org.example.project.alarm.WakeyWakeyApp
 import org.koin.core.context.startKoin
 
 @Composable
-fun App(isAlarmRinging: Boolean) {
+fun App(isAlarmRinging: Boolean, hour: String, minute: String) {
     AlarmTheme {
-        WakeyWakeyApp(isAlarmRinging)
+        WakeyWakeyApp(isAlarmRinging, hour, minute)
     }
 }

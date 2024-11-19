@@ -16,9 +16,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         val isAlarmRinging = this.intent.getBooleanExtra("alarm", false)
+        val hour = this.intent.getStringExtra("hour").orEmpty()
+        val minute = this.intent.getStringExtra("minute").orEmpty()
+
         installSplashScreen()
         setContent {
-            App(isAlarmRinging = isAlarmRinging)
+            App(isAlarmRinging = isAlarmRinging, hour = hour, minute = minute)
         }
     }
 }

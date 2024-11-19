@@ -38,6 +38,8 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun WakeyWakeyApp(
     isAlarmRinging: Boolean,
+    hour: String,
+    minute: String,
     navController: NavHostController = rememberNavController()
 ) {
     // Get current back stack entry
@@ -124,7 +126,9 @@ fun WakeyWakeyApp(
 
             composable(route = WakeyWakeyScreen.AlarmTriggerScreen.name) {
                 AlarmTriggerScreen(
-
+                    alarmTime = "$hour:$minute",
+                    alarmName = "test first",
+                    onClick = {}
                 )
             }
         }

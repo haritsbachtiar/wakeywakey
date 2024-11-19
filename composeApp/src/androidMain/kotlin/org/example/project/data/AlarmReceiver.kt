@@ -12,7 +12,13 @@ class AlarmReceiver : BroadcastReceiver() {
         val alarmIntent = Intent(context, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK // Required to start an Activity from a Receiver
         }
+
+        val hour = intent?.getStringExtra("hour")
+        val minute = intent?.getStringExtra("minute")
+
         alarmIntent.putExtra("alarm", true)
+        alarmIntent.putExtra("hour", hour)
+        alarmIntent.putExtra("minute", minute)
 
         context?.startActivity(alarmIntent)
     }

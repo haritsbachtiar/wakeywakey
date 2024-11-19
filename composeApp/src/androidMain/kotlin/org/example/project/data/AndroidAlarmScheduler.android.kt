@@ -10,7 +10,7 @@ import kotlinx.datetime.LocalTime
 import org.example.project.alarm.data.AlarmScheduler
 import org.example.project.alarm.data.tables.AlarmRealmObject
 
-class AndroidAlarmScheduler(
+actual class AndroidAlarmScheduler(
     private val context: Context
 ) : AlarmScheduler {
 
@@ -25,7 +25,11 @@ class AndroidAlarmScheduler(
             nanosecond = 0)
 
         val triggerAtMs = alarmTime.toMillisecondOfDay().toLong()
-        val intent = Intent(context, AlarmReceiver::class.java)
+
+        val intent = Intent(context, AlarmReceiver::class.java).apply {
+            putExtra("hour", alarmItem.hour)
+            putExtra("minute", alarmItem.minute)
+        }
 
         if(alarmManager.canScheduleExactAlarms()) {
             alarmManager.setExactAndAllowWhileIdle(
