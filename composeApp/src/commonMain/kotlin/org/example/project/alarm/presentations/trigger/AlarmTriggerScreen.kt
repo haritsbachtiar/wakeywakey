@@ -2,6 +2,7 @@ package org.example.project.alarm.presentations.trigger
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -39,55 +40,58 @@ fun AlarmTriggerScreen(
     alarmName: String,
     onClick: () -> Unit
 ) {
-   Column(
-       modifier = modifier
-           .fillMaxSize()
-           .background(color = Color.White),
-       horizontalAlignment = Alignment.CenterHorizontally,
-       verticalArrangement = Arrangement.spacedBy(space = 16.dp, alignment = Alignment.CenterVertically)
-   ) {
+    Box(
+        modifier = modifier.fillMaxSize().background(color = Color.White),
+        contentAlignment = Alignment.Center
+    ) {
 
-       var width by remember {
-           mutableStateOf(0)
-       }
+        Column(
+            modifier = Modifier
+                .fillMaxHeight()
+                .width(IntrinsicSize.Max),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(space = 16.dp, alignment = Alignment.CenterVertically)
+        ) {
 
-       Icon(
-           painter = painterResource(Res.drawable.alarm_logo),
-           contentDescription = "Switch off alarm",
-           tint = MaterialTheme.colorScheme.primary
-       )
+            var width by remember {
+                mutableStateOf(0)
+            }
 
-       Text(
-           modifier = modifier.wrapContentWidth()
-               .onSizeChanged { size ->
-                  width = size.width
-               },
-           textAlign = TextAlign.Center,
-           text = alarmTime,
-           color = MaterialTheme.colorScheme.primary,
-           style = MaterialTheme.typography.displayLarge
-       )
+            Icon(
+                painter = painterResource(Res.drawable.alarm_logo),
+                contentDescription = "Switch off alarm",
+                tint = MaterialTheme.colorScheme.primary
+            )
 
-       Text(
-           modifier = modifier.width(214.dp),
-           textAlign = TextAlign.Center,
-           text = alarmName.uppercase(),
-           color = MaterialTheme.colorScheme.primary,
-           style = MaterialTheme.typography.bodyLarge
-               .copy(fontWeight = FontWeight.Bold),
-       )
+            Text(
+                modifier = modifier.fillMaxWidth(),
+                textAlign = TextAlign.Center,
+                text = alarmTime,
+                color = MaterialTheme.colorScheme.primary,
+                style = MaterialTheme.typography.displayLarge
+            )
 
-       Button(
-           modifier = modifier.width(width.dp),
-           onClick = onClick
-       ) {
-           Text(
-               text = "Turn Off",
-               color = Color.White,
-               style = MaterialTheme.typography.bodyLarge
-           )
-       }
-   }
+            Text(
+                modifier = modifier.wrapContentWidth(),
+                textAlign = TextAlign.Center,
+                text = alarmName.uppercase(),
+                color = MaterialTheme.colorScheme.primary,
+                style = MaterialTheme.typography.bodyLarge
+                    .copy(fontWeight = FontWeight.Bold),
+            )
+
+            Button(
+                modifier = modifier.fillMaxWidth(),
+                onClick = onClick
+            ) {
+                Text(
+                    text = "Turn Off",
+                    color = Color.White,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            }
+        }
+    }
 }
 @Preview
 @Composable
