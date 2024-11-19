@@ -3,7 +3,6 @@ package org.example.project.di
 import org.example.project.alarm.data.AlarmScheduler
 import org.example.project.alarm.data.EnableAlarmSound
 import org.example.project.alarm.data.LocalAlarmDataSourceImp
-import org.example.project.alarm.data.getAlarmScheduler
 import org.example.project.alarm.data.getEnableAlarmSound
 import org.example.project.alarm.domain.AlarmDataSource
 import org.example.project.alarm.presentations.AlarmsViewModel
