@@ -15,9 +15,7 @@ val alarmDetailsModule = module {
     factory<AlarmDataSource> {
         LocalAlarmDataSourceImp(get<RealmDbClient>())
     }
-    single<AlarmScheduler> {
-        getAlarmScheduler()
-    }
+
     single<EnableAlarmSound> {
         getEnableAlarmSound()
     }
@@ -25,7 +23,7 @@ val alarmDetailsModule = module {
     viewModel {
         AlarmsViewModel(
             get<AlarmDataSource>(),
-            get<AlarmScheduler>()
+            get<AlarmScheduler>(),
         )
     }
 }

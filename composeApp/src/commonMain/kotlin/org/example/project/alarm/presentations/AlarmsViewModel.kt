@@ -17,7 +17,7 @@ import org.example.project.alarm.presentations.model.AlarmUI
 
 class AlarmsViewModel(
     private val alarmDataSource: AlarmDataSource,
-    private val alarmScheduler: AlarmScheduler
+    private val alarmScheduler: AlarmScheduler,
 ) : ViewModel() {
     private var _alarmState = MutableStateFlow(AlarmsState())
     val alarmState = _alarmState
@@ -73,6 +73,7 @@ class AlarmsViewModel(
         val selectedAlarmUI = _alarmState.value.selectedAlarms ?: AlarmUI()
         viewModelScope.launch {
             alarmDataSource.writeAlarm(selectedAlarmUI.toAlarmRealmObject())
+            alarmScheduler.schedule(selectedAlarmUI.toAlarmRealmObject())
         }
     }
 

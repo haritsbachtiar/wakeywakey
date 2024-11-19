@@ -13,6 +13,7 @@ class WakeyWakeyApplication: Application() {
             koinConfig = {
                 androidLogger()
                 androidContext(this@WakeyWakeyApplication)
+                androidSpecificModule
             },
         )
     }

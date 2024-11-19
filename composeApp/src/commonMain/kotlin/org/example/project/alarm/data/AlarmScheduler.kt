@@ -6,5 +6,3 @@ interface AlarmScheduler {
     fun schedule(alarmItem: AlarmRealmObject)
     fun cancel(alarmItem: AlarmRealmObject)
 }
-
-expect fun getAlarmScheduler(): AlarmScheduler
