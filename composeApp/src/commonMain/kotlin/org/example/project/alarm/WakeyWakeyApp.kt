@@ -17,6 +17,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -31,10 +32,12 @@ import org.example.project.alarm.presentations.AlarmsViewModel
 import org.example.project.alarm.presentations.WakeyWakeyScreen
 import org.example.project.alarm.presentations.detail.AlarmDetailScreen
 import org.example.project.alarm.presentations.list.AlarmListScreen
+import org.example.project.alarm.presentations.trigger.AlarmTriggerScreen
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun WakeyWakeyApp(
+    isAlarmRinging: Boolean,
     navController: NavHostController = rememberNavController()
 ) {
     // Get current back stack entry
@@ -47,6 +50,11 @@ fun WakeyWakeyApp(
     val alarmsViewModel = koinViewModel<AlarmsViewModel>()
     val alarmState by alarmsViewModel.alarmState.collectAsStateWithLifecycle()
 
+    LaunchedEffect(isAlarmRinging) {
+        if(isAlarmRinging) {
+            navController.navigate(WakeyWakeyScreen.AlarmTriggerScreen.name)
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -113,8 +121,11 @@ fun WakeyWakeyApp(
                         .padding(innerPadding)
                 )
             }
-            composable(route = WakeyWakeyScreen.AlarmTriggerScreen.name) {
 
+            composable(route = WakeyWakeyScreen.AlarmTriggerScreen.name) {
+                AlarmTriggerScreen(
+
+                )
             }
         }
     }

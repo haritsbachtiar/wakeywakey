@@ -16,6 +16,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -40,6 +41,16 @@ fun AlarmTriggerScreen(
     alarmName: String,
     onClick: () -> Unit
 ) {
+
+    var shouldStartRinging by remember {
+        mutableStateOf(false)
+    }
+    LaunchedEffect(shouldStartRinging) {
+        if(shouldStartRinging) {
+
+        }
+    }
+
     Box(
         modifier = modifier.fillMaxSize().background(color = Color.White),
         contentAlignment = Alignment.Center

@@ -14,13 +14,11 @@ import org.example.project.core.presentation.theme.AlarmTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val isAlarmRinging = this.intent.getBooleanExtra("alarm", false)
         installSplashScreen()
         setContent {
-          //  App()
-            AlarmTriggerScreen(
-                alarmName = "Work Alarm",
-                alarmTime = "10:00"
-            ) {}
+            App(isAlarmRinging = isAlarmRinging)
         }
     }
 }
