@@ -1,7 +1,8 @@
 package org.example.project.alarm.data
 
-expect class EnableAlarmSound() {
+interface EnableAlarmSound {
     fun startAlarm()
-
     fun stopAlarm()
 }
+
+expect fun getEnableAlarmSound():EnableAlarmSound

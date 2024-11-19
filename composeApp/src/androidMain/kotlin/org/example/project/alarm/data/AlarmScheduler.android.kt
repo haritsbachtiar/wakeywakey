@@ -1,4 +1,4 @@
-package org.example.project.data
+package org.example.project.alarm.data
 
 import android.app.AlarmManager
 import android.app.PendingIntent
@@ -7,13 +7,12 @@ import android.content.Intent
 import android.os.Build
 import androidx.annotation.RequiresApi
 import kotlinx.datetime.LocalTime
-import org.example.project.alarm.data.AlarmScheduler
+import org.example.project.WakeyWakeyApplication
 import org.example.project.alarm.data.tables.AlarmRealmObject
+import org.example.project.data.AlarmReceiver
+import org.koin.core.context.KoinContext
 
-actual class AndroidAlarmScheduler(
-    private val context: Context
-) : AlarmScheduler {
-
+class AndroidAlarmScheduler(private val context: Context): AlarmScheduler {
     private val alarmManager = context.getSystemService(AlarmManager::class.java)
 
     @RequiresApi(Build.VERSION_CODES.S)
@@ -56,3 +55,5 @@ actual class AndroidAlarmScheduler(
         )
     }
 }
+
+actual fun getAlarmScheduler(): AlarmScheduler = AndroidAlarmScheduler(context = KoinContext())

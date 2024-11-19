@@ -9,13 +9,15 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.example.project.alarm.data.AlarmScheduler
 import org.example.project.alarm.data.toAlarmRealmObject
 import org.example.project.alarm.data.toAlarmUI
 import org.example.project.alarm.domain.AlarmDataSource
 import org.example.project.alarm.presentations.model.AlarmUI
 
 class AlarmsViewModel(
-    private val alarmDataSource: AlarmDataSource
+    private val alarmDataSource: AlarmDataSource,
+    private val alarmScheduler: AlarmScheduler
 ) : ViewModel() {
     private var _alarmState = MutableStateFlow(AlarmsState())
     val alarmState = _alarmState

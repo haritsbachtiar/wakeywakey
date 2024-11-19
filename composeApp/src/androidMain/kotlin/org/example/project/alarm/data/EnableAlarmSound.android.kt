@@ -2,19 +2,22 @@ package org.example.project.alarm.data
 
 import android.content.Context
 import android.media.RingtoneManager
+import org.example.project.WakeyWakeyApplication
 
-actual class EnableAlarmSound(private val context: Context) {
+class AndroidEnableAlarmSound(private val context: Context) : EnableAlarmSound {
 
     private val ringtoneUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
 
-    actual fun startAlarm() {
+    override fun startAlarm() {
         RingtoneManager.getRingtone(context, ringtoneUri)
             .play()
     }
 
-    actual fun stopAlarm() {
+    override fun stopAlarm() {
         RingtoneManager.getRingtone(context, ringtoneUri)
             .stop()
     }
 }
 
+actual fun getEnableAlarmSound(): EnableAlarmSound =
+    AndroidEnableAlarmSound(context = WakeyWakeyApplication().applicationContext)
