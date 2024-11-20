@@ -18,7 +18,7 @@ class AndroidPlatform : Platform {
 actual fun getPlatform(): Platform = AndroidPlatform()
 
 
-actual class AndroidAlarmSchedulerImp(private val context: Context): AlarmScheduler {
+actual class AlarmSchedulerImp(private val context: Context): AlarmScheduler {
     private val alarmManager = context.getSystemService(AlarmManager::class.java)
 
     @RequiresApi(Build.VERSION_CODES.S)

@@ -10,7 +10,7 @@ class IOSPlatform: Platform {
 
 actual fun getPlatform(): Platform = IOSPlatform()
 
-actual class AndroidAlarmSchedulerImp: AlarmScheduler {
+actual class AlarmSchedulerImp: AlarmScheduler {
     actual override fun schedule(alarmItem: AlarmRealmObject) {
         TODO("Not yet implemented")
     }

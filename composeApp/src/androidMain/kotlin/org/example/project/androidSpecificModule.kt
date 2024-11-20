@@ -8,6 +8,6 @@ import org.koin.dsl.module
 val androidSpecificModule = module {
 
    single<AlarmScheduler> {
-      AndroidAlarmSchedulerImp(context = androidContext())
+      AlarmSchedulerImp(context = androidContext())
    }
 }

@@ -9,7 +9,7 @@ interface Platform {
 
 expect fun getPlatform(): Platform
 
-expect class AndroidAlarmSchedulerImp: AlarmScheduler {
+expect class AlarmSchedulerImp: AlarmScheduler {
     override fun schedule(alarmItem: AlarmRealmObject)
     override fun cancel(alarmItem: AlarmRealmObject)
 }
