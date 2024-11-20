@@ -1,5 +1,7 @@
 package org.example.project
 
+import org.example.project.alarm.data.AlarmScheduler
+import org.example.project.alarm.data.tables.AlarmRealmObject
 import platform.UIKit.UIDevice
 
 class IOSPlatform: Platform {
@@ -7,3 +9,13 @@ class IOSPlatform: Platform {
 }
 
 actual fun getPlatform(): Platform = IOSPlatform()
+
+actual class AndroidAlarmSchedulerImp actual constructor(): AlarmScheduler {
+    actual override fun schedule(alarmItem: AlarmRealmObject) {
+        TODO("Not yet implemented")
+    }
+
+    actual override fun cancel(alarmItem: AlarmRealmObject) {
+        TODO("Not yet implemented")
+    }
+}
