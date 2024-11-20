@@ -90,6 +90,7 @@ class AlarmsViewModel(
         if (alarmUI._id != null) {
             viewModelScope.launch {
                 alarmDataSource.deleteAlarms(alarmUI.toAlarmRealmObject())
+                alarmScheduler.cancel(alarmUI.toAlarmRealmObject())
             }
         }
     }
@@ -149,6 +150,11 @@ class AlarmsViewModel(
         if (alarmUI._id != null) {
             viewModelScope.launch {
                 alarmDataSource.updateAlarm(alarmUI.toAlarmRealmObject())
+                if (alarmUI.isActive) {
+                    alarmScheduler.schedule(alarmUI.toAlarmRealmObject())
+                } else {
+                    alarmScheduler.cancel(alarmUI.toAlarmRealmObject())
+                }
             }
         }
     }
