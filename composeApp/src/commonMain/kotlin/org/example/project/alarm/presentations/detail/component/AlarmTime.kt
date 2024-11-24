@@ -95,14 +95,14 @@ fun remainingTime(alarmHours: Int, alarmMinutes: Int, clock: Clock): String {
     } else {
         (alarmInstant - currentInstant)
     }
-    println("currentTime")
-    println(currentInstant)
-    println("currentDatetime")
-    println(currentDateTime)
-    println("alarmInstant")
-    println(alarmInstant)
-    println("timeLeft")
-    println(timeLeft)
+//    println("currentTime")
+//    println(currentInstant)
+//    println("currentDatetime")
+//    println(currentDateTime)
+//    println("alarmInstant")
+//    println(alarmInstant)
+//    println("timeLeft")
+//    println(timeLeft)
 
     return timeLeft.toString()
 }
