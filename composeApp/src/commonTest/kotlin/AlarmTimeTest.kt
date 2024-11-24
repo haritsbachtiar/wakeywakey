@@ -3,16 +3,33 @@ package org.example.project
 import assertk.assertThat
 import assertk.assertions.isEqualTo
 import org.example.project.alarm.presentations.detail.component.remainingTime
+import kotlin.test.BeforeTest
 
 import kotlin.test.Test
 
-
 class AlarmTimeTest {
+    private lateinit var fakeTime: String
+    private lateinit var fakeClock: FakeClock
+    @BeforeTest
+    fun setUp() {
+        fakeTime = "2024-11-24T19:12:00Z"
+        fakeClock = FakeClock(fakeTime)
+    }
 
     @Test
-    fun testCheckRemainingTime() {
-
-        assertThat(remainingTime(24,2))
-            .isEqualTo("24h 2 mins")
+    fun testFakeClock() {
+        assertThat(fakeClock.now().toString())
+            .isEqualTo(fakeTime)
+    }
+    @Test
+    fun testCheckRemainingTimeWhenEarlierThanAlarm() {
+        println(fakeClock)
+        assertThat(remainingTime(20,20, fakeClock))
+            .isEqualTo("1h 8m")
+    }
+    fun testCheckRemainingTimeWhenLaterThanAlarm() {
+        println(fakeClock)
+        assertThat(remainingTime(14,20, fakeClock))
+            .isEqualTo("21h 8m")
     }
 }

@@ -20,6 +20,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import kotlinx.datetime.Clock
+import kotlinx.datetime.DateTimeUnit
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.minus
+import kotlinx.datetime.plus
+import kotlinx.datetime.toLocalDateTime
+import kotlin.time.Duration
 
 @Composable
 fun AlarmTime(
@@ -66,7 +72,7 @@ fun AlarmTime(
             )
         }
         Spacer(modifier = Modifier.height(16.dp))
-        val remainingTime = remainingTime(hour, minutes);
+        val remainingTime = remainingTime(hour, minutes, Clock.System);
         Text(
             text = "Alarm in $remainingTime",
             style = MaterialTheme.typography.labelLarge
@@ -74,15 +80,31 @@ fun AlarmTime(
     }
 }
 
-fun remainingTime(hoursLeft: Int, minutesLeft: Int): String {
+fun remainingTime(alarmHours: Int, alarmMinutes: Int, clock: Clock): String {
+    val currentInstant = clock.now()
+    val currentDateTime = currentInstant.toLocalDateTime(timeZone = TimeZone.UTC)
+    val alarmInstant = currentInstant
+        .minus(currentDateTime.hour, DateTimeUnit.HOUR)
+        .minus(currentDateTime.minute, DateTimeUnit.MINUTE)
+        .minus(currentDateTime.second, DateTimeUnit.SECOND)
+        .plus(alarmHours, DateTimeUnit.HOUR)
+        .plus(alarmMinutes, DateTimeUnit.MINUTE)
+
+    val timeLeft: Duration = if (alarmInstant < currentInstant) {
+        (alarmInstant.plus(24, DateTimeUnit.HOUR) - currentInstant)
+    } else {
+        (alarmInstant - currentInstant)
+    }
     println("currentTime")
-    println(Clock.System.now())
-    return StringBuilder()
-        .append(hoursLeft) // ascii code 32 or space
-        .append("h ")
-        .append(minutesLeft)
-        .append(" mins")
-        .toString()
+    println(currentInstant)
+    println("currentDatetime")
+    println(currentDateTime)
+    println("alarmInstant")
+    println(alarmInstant)
+    println("timeLeft")
+    println(timeLeft)
+
+    return timeLeft.toString()
 }
 
 private fun Int.toTimeStringFormat(): String {

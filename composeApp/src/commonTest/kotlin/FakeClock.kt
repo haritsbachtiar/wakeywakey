@@ -3,14 +3,8 @@ package org.example.project
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 
-class Clock(private val fixedInstant: Instant) : Clock {
-    class System(private val fixedInstant: Instant) : Clock {
-        override fun now(): Instant = fixedInstant
-    }
-
+class FakeClock(val time: String): Clock {
     override fun now(): Instant {
-        TODO("Not yet implemented")
+        return Instant.parse(this.time)
     }
 }
-
-fun Clock.Companion.System(fixedInstant: Instant): Clock = Clock(fixedInstant)
