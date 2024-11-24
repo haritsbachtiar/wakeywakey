@@ -27,9 +27,10 @@ class AlarmTimeTest {
         assertThat(remainingTime(20,20, fakeClock))
             .isEqualTo("1h 8m")
     }
+    @Test
     fun testCheckRemainingTimeWhenLaterThanAlarm() {
         println(fakeClock)
         assertThat(remainingTime(14,20, fakeClock))
-            .isEqualTo("21h 8m")
+            .isEqualTo("19h 8m")
     }
 }
