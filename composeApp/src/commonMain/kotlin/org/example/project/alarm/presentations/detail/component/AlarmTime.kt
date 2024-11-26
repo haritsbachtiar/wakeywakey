@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import kotlinx.datetime.Clock
 import kotlinx.datetime.DateTimeUnit
+import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.minus
 import kotlinx.datetime.plus
@@ -82,7 +83,7 @@ fun AlarmTime(
 
 fun remainingTime(alarmHours: Int, alarmMinutes: Int, clock: Clock): String {
     val currentInstant = clock.now()
-    val currentDateTime = currentInstant.toLocalDateTime(timeZone = TimeZone.UTC)
+    val currentDateTime = currentInstant.toLocalDateTime(timeZone = TimeZone.currentSystemDefault())
     val alarmInstant = currentInstant
         .minus(currentDateTime.hour, DateTimeUnit.HOUR)
         .minus(currentDateTime.minute, DateTimeUnit.MINUTE)
@@ -95,14 +96,6 @@ fun remainingTime(alarmHours: Int, alarmMinutes: Int, clock: Clock): String {
     } else {
         (alarmInstant - currentInstant)
     }
-//    println("currentTime")
-//    println(currentInstant)
-//    println("currentDatetime")
-//    println(currentDateTime)
-//    println("alarmInstant")
-//    println(alarmInstant)
-//    println("timeLeft")
-//    println(timeLeft)
 
     return timeLeft.toString()
 }

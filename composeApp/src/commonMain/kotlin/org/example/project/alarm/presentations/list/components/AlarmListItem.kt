@@ -25,7 +25,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import kotlinx.datetime.Clock
 import org.example.project.alarm.presentations.AlarmsAction
+import org.example.project.alarm.presentations.detail.component.remainingTime
 import org.example.project.alarm.presentations.model.AlarmUI
 
 @Composable
@@ -101,7 +103,7 @@ fun AlarmListItem(
                     }
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        "---",
+                        remainingTime(alarm.hour, alarm.minute, Clock.System),
                         style = MaterialTheme.typography.labelLarge
                     )
                 }
