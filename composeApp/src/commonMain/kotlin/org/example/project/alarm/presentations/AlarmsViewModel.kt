@@ -82,6 +82,7 @@ class AlarmsViewModel(
         if (selectedAlarmUI._id != null) {
             viewModelScope.launch {
                 alarmDataSource.updateAlarm(selectedAlarmUI.toAlarmRealmObject())
+                alarmScheduler.schedule(selectedAlarmUI.toAlarmRealmObject())
             }
         }
     }

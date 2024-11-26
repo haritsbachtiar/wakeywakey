@@ -21,6 +21,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavDeepLink
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -53,7 +54,7 @@ fun WakeyWakeyApp(
     val alarmState by alarmsViewModel.alarmState.collectAsStateWithLifecycle()
 
     LaunchedEffect(isAlarmRinging) {
-        if(isAlarmRinging) {
+        if (isAlarmRinging) {
             navController.navigate(WakeyWakeyScreen.AlarmTriggerScreen.name)
         }
     }
@@ -93,10 +94,11 @@ fun WakeyWakeyApp(
                     alarms = alarmState.alarms,
                     onAction = { action: AlarmsAction ->
                         alarmsViewModel.onAction(action)
-                        when(action) {
+                        when (action) {
                             is AlarmsAction.OnAlarmClick -> {
                                 navController.navigate(WakeyWakeyScreen.AlarmDetailScreen.name)
                             }
+
                             else -> Unit
                         }
                     }
@@ -124,7 +126,10 @@ fun WakeyWakeyApp(
                 )
             }
 
-            composable(route = WakeyWakeyScreen.AlarmTriggerScreen.name) {
+            composable(
+                route = WakeyWakeyScreen.AlarmTriggerScreen.name,
+                deepLinks = listOf(NavDeepLink("wakewakeyapp://alarm_trigger_screen"))
+            ) {
                 AlarmTriggerScreen(
                     alarmTime = "$hour:$minute",
                     alarmName = "test first",

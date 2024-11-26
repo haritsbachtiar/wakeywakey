@@ -9,17 +9,24 @@ class AlarmReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
         /** Navigate to the AlarmTriggerScreen */
-        val alarmIntent = Intent(context, MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK // Required to start an Activity from a Receiver
-        }
+        val notificationHandler = NotificationHandler(context!!)
+        notificationHandler.start(MainActivity::class.java, "TEST ALARM")
 
-        val hour = intent?.getStringExtra("hour")
-        val minute = intent?.getStringExtra("minute")
-
-        alarmIntent.putExtra("alarm", true)
-        alarmIntent.putExtra("hour", hour)
-        alarmIntent.putExtra("minute", minute)
-
-        context?.startActivity(alarmIntent)
+        println("ALARM RECEIVE")
+//        val alarmIntent = Intent(context, MainActivity::class.java).apply {
+////            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+//            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+//            addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT)// Required to start an Activity from a Receiver
+//        }
+//
+//        val hour = intent?.getIntExtra("hour", 0)
+//        val minute = intent?.getIntExtra("minute", 0)
+//
+//        alarmIntent.putExtra("alarm", true)
+//        alarmIntent.putExtra("hour", hour)
+//        alarmIntent.putExtra("minute", minute)
+//
+//        println("ALARM RECEIVE END")
+//        context?.startActivity(alarmIntent)
     }
 }

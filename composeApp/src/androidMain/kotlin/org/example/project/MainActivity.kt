@@ -10,8 +10,10 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import org.example.project.alarm.presentations.detail.component.AlarmTimePickerDialog
 import org.example.project.alarm.presentations.trigger.AlarmTriggerScreen
 import org.example.project.core.presentation.theme.AlarmTheme
+import org.example.project.data.AlarmReceiver
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

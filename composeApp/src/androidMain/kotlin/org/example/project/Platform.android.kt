@@ -27,7 +27,8 @@ actual class AlarmSchedulerImp(private val context: Context): AlarmScheduler {
             hour = alarmItem.hour,
             minute = alarmItem.minute,
             second = 0,
-            nanosecond = 0)
+            nanosecond = 0
+        )
 
         val triggerAtMs = alarmTime.toMillisecondOfDay().toLong()
 
@@ -37,6 +38,16 @@ actual class AlarmSchedulerImp(private val context: Context): AlarmScheduler {
         }
 
         if(alarmManager.canScheduleExactAlarms()) {
+//            alarmManager.setExact(
+//                AlarmManager.RTC_WAKEUP,
+//                triggerAtMs,
+//                PendingIntent.getBroadcast(
+//                    context,
+//                    alarmItem.hashCode(),
+//                    intent,
+//                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+//                )
+//            )
             alarmManager.setExactAndAllowWhileIdle(
                 AlarmManager.RTC_WAKEUP,
                 triggerAtMs,
@@ -48,6 +59,7 @@ actual class AlarmSchedulerImp(private val context: Context): AlarmScheduler {
                 )
             )
         }
+        println("ALARM SAVED ${alarmManager.nextAlarmClock}")
     }
 
     actual override fun cancel(alarmItem: AlarmRealmObject) {
