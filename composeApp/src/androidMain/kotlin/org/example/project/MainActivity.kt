@@ -1,16 +1,20 @@
 package org.example.project
 
+import android.Manifest
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import org.example.project.alarm.presentations.detail.component.AlarmTimePickerDialog
-import org.example.project.alarm.presentations.trigger.AlarmTriggerScreen
 import org.example.project.core.presentation.theme.AlarmTheme
-import org.example.project.data.AlarmReceiver
 
 class MainActivity : ComponentActivity() {
 
@@ -23,8 +27,28 @@ class MainActivity : ComponentActivity() {
 
         installSplashScreen()
         setContent {
+            val context = LocalContext.current
+            val permissionNotificationLauncher = rememberLauncherForActivityResult(
+                contract = ActivityResultContracts.RequestPermission()
+            ) { isPermissionAccepted ->
+                /** User has accepted or declined the notification permission */
+                println("User choice $isPermissionAccepted")
+            }
+
+            LaunchedEffect(key1 = permissionNotificationLauncher) {
+                permissionNotificationLauncher.requestWakeyPermission(context)
+            }
+
             App(isAlarmRinging = isAlarmRinging, hour = hour, minute = minute)
         }
+    }
+}
+
+private fun ActivityResultLauncher<String>.requestWakeyPermission(context: Context) {
+    val hasNotificationPermission = context.hasNotificationPermission()
+
+    if(Build.VERSION.SDK_INT >= 33 && !hasNotificationPermission) {
+        this.launch(Manifest.permission.POST_NOTIFICATIONS)
     }
 }
 
