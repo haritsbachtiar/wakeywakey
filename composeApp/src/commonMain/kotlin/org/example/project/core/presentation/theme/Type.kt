@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.sp
  */
 
 // Set of Material typography styles to start with
-val Typography = Typography(
+val typography = Typography(
     displayLarge = TextStyle(
         color = high_emphasis,
         fontWeight = FontWeight.SemiBold,

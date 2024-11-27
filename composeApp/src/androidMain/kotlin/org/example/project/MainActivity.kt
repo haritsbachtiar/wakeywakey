@@ -9,12 +9,15 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import org.example.project.core.presentation.theme.AlarmTheme
+import org.example.project.core.presentation.theme.AppTheme
 
 class MainActivity : ComponentActivity() {
 
@@ -39,7 +42,13 @@ class MainActivity : ComponentActivity() {
                 permissionNotificationLauncher.requestWakeyPermission(context)
             }
 
-            App(isAlarmRinging = isAlarmRinging, hour = hour, minute = minute)
+            App(
+                isAlarmRinging = isAlarmRinging,
+                hour = hour,
+                minute = minute,
+                darkTheme = isSystemInDarkTheme(),
+                dynamicColor = true
+            )
         }
     }
 }
@@ -55,7 +64,7 @@ private fun ActivityResultLauncher<String>.requestWakeyPermission(context: Conte
 @Preview
 @Composable
 fun AlarmListPreview() {
-    AlarmTheme {
+    AppTheme(darkTheme = false, dynamicColor = false) {
 //        AlarmDetailScreen(
 //            AlarmsState(),
 //            {},
@@ -71,9 +80,14 @@ fun AlarmListPreview() {
 //            onSave = {},
 //            onDismissRequest = { /*TODO*/ }
 //        )
-     /*   AlarmTimePickerDialog(
-            onConfirm = { _, _ -> },
-            onDismiss = { *//*TODO*//* }
-        )*/
+//        AlarmTimePickerDialog(
+//            initialHour = null,
+//            initialMinute = null,
+//            onConfirm = { _, _ -> },
+//            onDismiss = { }
+//        )
+        Column {
+            Text("12345678")
+        }
     }
 }

@@ -14,7 +14,7 @@ This is a Kotlin Multiplatform project targeting Android, iOS.
   - SplashScreen [DONE]
   - Setup Realm DB [DONE]
   - Setup Koin Injection [DONE]
-  - Setup Theme [WIP]
+  - Setup Theme [DONE]
   - AlarmListScreen [WIP]
     - Create UI [DONE]
     - Integrate With Data Flow [DONE]
