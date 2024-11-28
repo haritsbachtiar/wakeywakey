@@ -31,16 +31,23 @@ class NotificationHandler(
             addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
         }
 
-        val pendingIntent = TaskStackBuilder.create(context)
+/*        val pendingIntent = TaskStackBuilder.create(context)
             .addNextIntentWithParentStack(activityIntent)
-            .getPendingIntent(0, PendingIntent.FLAG_IMMUTABLE)
+            .getPendingIntent(0, PendingIntent.FLAG_IMMUTABLE)*/
+
+        val pendingIntent = PendingIntent.getActivity(
+            context,
+            0,
+            alarmIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
 
         val notification = NotificationCompat
             .Builder(context, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_launcher_background)
             .setContentTitle("TEST ALARM")
             .setContentText(message)
-            .setContentIntent(pendingIntent)
+            .setFullScreenIntent(pendingIntent, true)
             .build()
 
         notificationManager.notify(100, notification)
@@ -51,7 +58,7 @@ class NotificationHandler(
             val channel = NotificationChannel(
                 CHANNEL_ID,
                 CHANNEL_NAME,
-                NotificationManager.IMPORTANCE_DEFAULT
+                NotificationManager.IMPORTANCE_HIGH
             )
             notificationManager.createNotificationChannel(channel)
         }

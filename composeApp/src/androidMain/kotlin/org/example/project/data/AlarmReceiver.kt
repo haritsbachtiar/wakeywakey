@@ -3,6 +3,7 @@ package org.example.project.data
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import org.example.project.AlarmActivity
 import org.example.project.MainActivity
 
@@ -10,13 +11,17 @@ class AlarmReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
         /** Navigate to the AlarmTriggerScreen */
-        val notificationHandler = NotificationHandler(context!!)
-        notificationHandler.start(MainActivity::class.java, "TEST ALARM")
 
         val intent = Intent(context, AlarmActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
         }
-        context.startActivity(intent)
+
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
+            context?.startActivity(intent)
+        } else {
+            val notificationHandler = NotificationHandler(context!!)
+            notificationHandler.start(MainActivity::class.java, "TEST ALARM")
+        }
 
         println("ALARM RECEIVE")
 //        val alarmIntent = Intent(context, MainActivity::class.java).apply {
