@@ -2,8 +2,11 @@ package org.example.project
 
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings.ACTION_MANAGE_OVERLAY_PERMISSION
+import android.provider.Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
@@ -27,6 +30,18 @@ class MainActivity : ComponentActivity() {
         val isAlarmRinging = this.intent.getBooleanExtra("alarm", false)
         val hour = this.intent.getStringExtra("hour").orEmpty()
         val minute = this.intent.getStringExtra("minute").orEmpty()
+
+        Intent().also { intent ->
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            intent.action = ACTION_REQUEST_SCHEDULE_EXACT_ALARM
+            startActivity(intent)
+        }
+
+        Intent().also { intent ->
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            intent.action = ACTION_MANAGE_OVERLAY_PERMISSION
+            startActivity(intent)
+        }
 
         installSplashScreen()
         setContent {

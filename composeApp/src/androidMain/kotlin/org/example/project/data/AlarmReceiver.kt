@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import org.example.project.AlarmActivity
-import org.example.project.MainActivity
 
 class AlarmReceiver : BroadcastReceiver() {
 
@@ -20,7 +19,7 @@ class AlarmReceiver : BroadcastReceiver() {
             context?.startActivity(intent)
         } else {
             val notificationHandler = NotificationHandler(context!!)
-            notificationHandler.start(MainActivity::class.java, "TEST ALARM")
+            notificationHandler.start(intent, "TEST ALARM")
         }
 
         println("ALARM RECEIVE")
