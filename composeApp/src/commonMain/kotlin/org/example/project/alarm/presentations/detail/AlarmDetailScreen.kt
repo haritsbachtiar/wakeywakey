@@ -96,7 +96,7 @@ fun AlarmDetailScreen(
         AlarmTime(
             hour = alarmState.selectedAlarms?.hour ?: 0,
             minutes = alarmState.selectedAlarms?.minute ?: 0,
-            description = "Alarm in --",
+            description = alarmState.selectedAlarms?.countDownText.toString(),
             onClick = {
                 showTimePicker = true
             }

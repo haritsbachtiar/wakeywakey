@@ -13,12 +13,15 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import org.example.project.alarm.data.CountDownHelper
+import org.example.project.alarm.presentations.toTimeStringFormat
 
 @Composable
 fun AlarmTime(
@@ -28,7 +31,13 @@ fun AlarmTime(
     description: String,
     onClick: () -> Unit
 ) {
-    val countdownState = remember { mutableStateOf(description) }
+    val currentDescription = remember {
+        mutableStateOf(description)
+    }
+
+    LaunchedEffect(hour, minutes) {
+        currentDescription.value =  "Alarm in ${CountDownHelper().calculateCountdown(hour, minutes)}"
+    }
 
     Column(
         modifier = modifier
@@ -65,29 +74,9 @@ fun AlarmTime(
             )
         }
         Spacer(modifier = Modifier.height(16.dp))
-        val remainingTime = remainingTime(hour, minutes);
         Text(
-            text = "Alarm in $remainingTime",
+            text = currentDescription.value,
             style = MaterialTheme.typography.labelLarge
         )
-    }
-}
-
-fun remainingTime(hoursLeft: Int, minutesLeft: Int): String {
-    return StringBuilder()
-        .append(hoursLeft) // ascii code 32 or space
-        .append("h ")
-        .append(minutesLeft)
-        .append(" mins")
-        .toString()
-}
-
-private fun Int.toTimeStringFormat(): String {
-    return if (this == 0) {
-        "00"
-    } else if (this < 10) {
-        "0$this"
-    } else {
-        this.toString()
     }
 }
