@@ -15,12 +15,13 @@ fun AlarmUI.toAlarmRealmObject(): AlarmRealmObject {
     return alarmRealmObject
 }
 
-fun AlarmRealmObject.toAlarmUI(): AlarmUI {
+fun AlarmRealmObject.toAlarmUI(countDownText: String): AlarmUI {
     return AlarmUI(
         _id = _id,
         name = name,
         minute = minute,
         hour = hour,
+        countDownText = countDownText,
         isActive = isActive
     )
 }
