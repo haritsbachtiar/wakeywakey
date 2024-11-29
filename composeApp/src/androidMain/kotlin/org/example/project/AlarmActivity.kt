@@ -15,7 +15,7 @@ class AlarmActivity : ComponentActivity() {
         val hour = this.intent.getStringExtra("hour").orEmpty()
         val minute = this.intent.getStringExtra("minute").orEmpty()
 
-        val mediaPlayer = MediaPlayer.create(this@AlarmActivity, R.raw.alarm )
+        val mediaPlayer = MediaPlayer.create(this@AlarmActivity, R.raw.camelot)
         mediaPlayer.start()
 
         setContent {
