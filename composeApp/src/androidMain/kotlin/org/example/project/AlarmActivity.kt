@@ -1,5 +1,6 @@
 package org.example.project
 
+import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -25,6 +26,7 @@ class AlarmActivity : ComponentActivity() {
                 alarmTime = "$hour:$minute",
                 onClick = {
                     mediaPlayer.release()
+                    this@AlarmActivity.startActivity(Intent(this@AlarmActivity, MainActivity::class.java))
                 }
             )
         }
