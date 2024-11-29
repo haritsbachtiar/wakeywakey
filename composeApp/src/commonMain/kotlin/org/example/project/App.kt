@@ -6,9 +6,6 @@ import org.example.project.core.presentation.theme.AppTheme
 
 @Composable
 fun App(
-    isAlarmRinging: Boolean,
-    hour: String,
-    minute: String,
     darkTheme: Boolean,
     dynamicColor: Boolean
 ) {
@@ -16,6 +13,6 @@ fun App(
         darkTheme = darkTheme,
         dynamicColor = dynamicColor
     ) {
-        WakeyWakeyApp(isAlarmRinging, hour, minute)
+        WakeyWakeyApp()
     }
 }

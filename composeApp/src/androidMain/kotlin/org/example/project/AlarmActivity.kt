@@ -13,16 +13,18 @@ class AlarmActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val hour = this.intent.getStringExtra("hour").orEmpty()
-        val minute = this.intent.getStringExtra("minute").orEmpty()
+        val name = this.intent.getStringExtra("name").orEmpty()
+        val hour = this.intent.getIntExtra("hour", 0)
+        val minute = this.intent.getIntExtra("minute", 0)
 
-        val mediaPlayer = MediaPlayer.create(this@AlarmActivity, R.raw.camelot)
+        val mediaPlayer = MediaPlayer.create(this@AlarmActivity, R.raw.alarm)
+        mediaPlayer.isLooping = true
         mediaPlayer.start()
 
         setContent {
             enableEdgeToEdge()
             AlarmTriggerScreen(
-                alarmName = "Test Name",
+                alarmName = name,
                 alarmTime = "$hour:$minute",
                 onClick = {
                     mediaPlayer.release()

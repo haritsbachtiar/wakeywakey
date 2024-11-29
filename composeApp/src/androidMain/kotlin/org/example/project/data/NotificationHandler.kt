@@ -21,7 +21,7 @@ class NotificationHandler(
         context.applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     }
 
-    fun start(alarmIntent: Intent, message: String) {
+    fun start(alarmIntent: Intent, alarmName: String, message: String) {
         createNotificationChannel()
         val pendingIntent = PendingIntent.getActivity(
             context,
@@ -36,7 +36,7 @@ class NotificationHandler(
             .Builder(context, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_launcher_background)
             .setChannelId(CHANNEL_ID)
-            .setContentTitle("TEST ALARM")
+            .setContentTitle(alarmName.uppercase())
             .setContentText(message)
             .setFullScreenIntent(pendingIntent, true)
             .build()

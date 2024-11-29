@@ -86,7 +86,6 @@ class AlarmsViewModel(
         val selectedAlarmUI = _alarmState.value.selectedAlarms ?: AlarmUI()
         viewModelScope.launch {
             alarmDataSource.writeAlarm(selectedAlarmUI.toAlarmRealmObject())
-            alarmScheduler.schedule(selectedAlarmUI.toAlarmRealmObject())
         }
     }
 
@@ -95,7 +94,9 @@ class AlarmsViewModel(
         if (selectedAlarmUI._id != null) {
             viewModelScope.launch {
                 alarmDataSource.updateAlarm(selectedAlarmUI.toAlarmRealmObject())
-                alarmScheduler.schedule(selectedAlarmUI.toAlarmRealmObject())
+                if (selectedAlarmUI.isActive) {
+                    alarmScheduler.schedule(selectedAlarmUI.toAlarmRealmObject())
+                }
             }
         }
     }
