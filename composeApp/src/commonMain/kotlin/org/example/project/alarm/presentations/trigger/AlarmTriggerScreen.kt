@@ -48,6 +48,8 @@ fun AlarmTriggerScreen(
         }
     }
 
+    
+
     Box(
         modifier = modifier.fillMaxSize().background(color = Color.White),
         contentAlignment = Alignment.Center
@@ -60,10 +62,6 @@ fun AlarmTriggerScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(space = 16.dp, alignment = Alignment.CenterVertically)
         ) {
-
-            var width by remember {
-                mutableStateOf(0)
-            }
 
             Icon(
                 painter = painterResource(Res.drawable.alarm_logo),

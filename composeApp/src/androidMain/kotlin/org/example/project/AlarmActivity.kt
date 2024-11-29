@@ -1,5 +1,6 @@
 package org.example.project
 
+import android.media.MediaPlayer
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -11,12 +12,21 @@ class AlarmActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val hour = this.intent.getStringExtra("hour").orEmpty()
+        val minute = this.intent.getStringExtra("minute").orEmpty()
+
+        val mediaPlayer = MediaPlayer.create(this@AlarmActivity, R.raw.alarm )
+        mediaPlayer.start()
+
         setContent {
             enableEdgeToEdge()
             AlarmTriggerScreen(
                 alarmName = "Test Name",
-                alarmTime = "Alarm Time",
-            ) {}
+                alarmTime = "$hour:$minute",
+                onClick = {
+                    mediaPlayer.release()
+                }
+            )
         }
     }
 }
