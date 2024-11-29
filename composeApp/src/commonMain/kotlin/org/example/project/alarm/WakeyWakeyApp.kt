@@ -38,9 +38,6 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun WakeyWakeyApp(
-    isAlarmRinging: Boolean,
-    hour: String,
-    minute: String,
     navController: NavHostController = rememberNavController()
 ) {
     // Get current back stack entry
@@ -52,12 +49,6 @@ fun WakeyWakeyApp(
 
     val alarmsViewModel = koinViewModel<AlarmsViewModel>()
     val alarmState by alarmsViewModel.alarmState.collectAsStateWithLifecycle()
-
-    LaunchedEffect(isAlarmRinging) {
-        if (isAlarmRinging) {
-            navController.navigate(WakeyWakeyScreen.AlarmTriggerScreen.name)
-        }
-    }
 
     Scaffold(
         topBar = {
@@ -123,17 +114,6 @@ fun WakeyWakeyApp(
                     modifier = Modifier
                         .verticalScroll(rememberScrollState())
                         .padding(innerPadding)
-                )
-            }
-
-            composable(
-                route = WakeyWakeyScreen.AlarmTriggerScreen.name,
-                deepLinks = listOf(NavDeepLink("wakewakeyapp://alarm_trigger_screen"))
-            ) {
-                AlarmTriggerScreen(
-                    alarmTime = "$hour:$minute",
-                    alarmName = "test first",
-                    onClick = {}
                 )
             }
         }

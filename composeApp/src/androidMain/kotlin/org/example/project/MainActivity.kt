@@ -1,9 +1,14 @@
 package org.example.project
 
 import android.Manifest
+import android.app.AlarmManager
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
+import android.provider.Settings.ACTION_MANAGE_OVERLAY_PERMISSION
+import android.provider.Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
@@ -24,10 +29,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val isAlarmRinging = this.intent.getBooleanExtra("alarm", false)
-        val hour = this.intent.getStringExtra("hour").orEmpty()
-        val minute = this.intent.getStringExtra("minute").orEmpty()
-
         installSplashScreen()
         setContent {
             val context = LocalContext.current
@@ -43,9 +44,6 @@ class MainActivity : ComponentActivity() {
             }
 
             App(
-                isAlarmRinging = isAlarmRinging,
-                hour = hour,
-                minute = minute,
                 darkTheme = isSystemInDarkTheme(),
                 dynamicColor = true
             )
@@ -56,7 +54,7 @@ class MainActivity : ComponentActivity() {
 private fun ActivityResultLauncher<String>.requestWakeyPermission(context: Context) {
     val hasNotificationPermission = context.hasNotificationPermission()
 
-    if(Build.VERSION.SDK_INT >= 33 && !hasNotificationPermission) {
+    if (Build.VERSION.SDK_INT >= 33 && !hasNotificationPermission) {
         this.launch(Manifest.permission.POST_NOTIFICATIONS)
     }
 }

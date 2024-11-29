@@ -2,6 +2,11 @@ package org.example.project.alarm.presentations
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collectLatest
@@ -10,6 +15,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.example.project.alarm.data.AlarmScheduler
+import org.example.project.alarm.data.CountDownHelper
 import org.example.project.alarm.data.toAlarmRealmObject
 import org.example.project.alarm.data.toAlarmUI
 import org.example.project.alarm.domain.AlarmDataSource
@@ -18,6 +24,7 @@ import org.example.project.alarm.presentations.model.AlarmUI
 class AlarmsViewModel(
     private val alarmDataSource: AlarmDataSource,
     private val alarmScheduler: AlarmScheduler,
+    private val countDownHelper: CountDownHelper
 ) : ViewModel() {
     private var _alarmState = MutableStateFlow(AlarmsState())
     val alarmState = _alarmState
@@ -28,6 +35,12 @@ class AlarmsViewModel(
             AlarmsState()
         )
 
+    private val scope = CoroutineScope(Dispatchers.Main + Job())
+
+    override fun onCleared() {
+        super.onCleared()
+        scope.cancel() // Clean up the coroutine
+    }
 
     fun onAction(action: AlarmsAction) {
         when (action) {
@@ -73,7 +86,6 @@ class AlarmsViewModel(
         val selectedAlarmUI = _alarmState.value.selectedAlarms ?: AlarmUI()
         viewModelScope.launch {
             alarmDataSource.writeAlarm(selectedAlarmUI.toAlarmRealmObject())
-            alarmScheduler.schedule(selectedAlarmUI.toAlarmRealmObject())
         }
     }
 
@@ -82,7 +94,9 @@ class AlarmsViewModel(
         if (selectedAlarmUI._id != null) {
             viewModelScope.launch {
                 alarmDataSource.updateAlarm(selectedAlarmUI.toAlarmRealmObject())
-                alarmScheduler.schedule(selectedAlarmUI.toAlarmRealmObject())
+                if (selectedAlarmUI.isActive) {
+                    alarmScheduler.schedule(selectedAlarmUI.toAlarmRealmObject())
+                }
             }
         }
     }
@@ -105,11 +119,21 @@ class AlarmsViewModel(
             }
 
             alarmDataSource.getAlarms().collectLatest { listOfAlarms ->
-                _alarmState.update { alarmsState ->
-                    alarmsState.copy(
-                        isLoading = false,
-                        alarms = listOfAlarms.map { it.toAlarmUI() }
-                    )
+                scope.launch {
+                    while (true) {
+                        val newList = listOfAlarms.map { alarms ->
+                            alarms.toAlarmUI(
+                                "Alarm in ${countDownHelper.calculateCountdown(alarms.hour, alarms.minute)}"
+                            )
+                        }
+                        _alarmState.update { alarmsState ->
+                            alarmsState.copy(
+                                isLoading = false,
+                                alarms = newList
+                            )
+                        }
+                        delay(60000)
+                    }
                 }
             }
         }

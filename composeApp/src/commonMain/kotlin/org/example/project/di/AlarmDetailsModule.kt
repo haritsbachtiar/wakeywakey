@@ -1,6 +1,7 @@
 package org.example.project.di
 
 import org.example.project.alarm.data.AlarmScheduler
+import org.example.project.alarm.data.CountDownHelper
 import org.example.project.alarm.data.EnableAlarmSound
 import org.example.project.alarm.data.LocalAlarmDataSourceImp
 import org.example.project.alarm.data.getEnableAlarmSound
@@ -19,10 +20,15 @@ val alarmDetailsModule = module {
         getEnableAlarmSound()
     }
 
+    single<CountDownHelper> {
+        CountDownHelper()
+    }
+
     viewModel {
         AlarmsViewModel(
             get<AlarmDataSource>(),
             get<AlarmScheduler>(),
+            get<CountDownHelper>()
         )
     }
 }

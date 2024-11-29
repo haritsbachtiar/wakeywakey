@@ -3,30 +3,25 @@ package org.example.project.data
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import org.example.project.MainActivity
+import android.os.Build
+import org.example.project.AlarmActivity
 
 class AlarmReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
-        /** Navigate to the AlarmTriggerScreen */
-        val notificationHandler = NotificationHandler(context!!)
-        notificationHandler.start(MainActivity::class.java, "TEST ALARM")
+        val alarmName = intent?.getStringExtra("name")
+        val newIntent = Intent(context, AlarmActivity::class.java).apply {
+            putExtra("name", alarmName)
+            putExtra("hour", intent?.getIntExtra("hour", 0))
+            putExtra("minute", intent?.getIntExtra("minute", 0))
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+        }
 
-        println("ALARM RECEIVE")
-//        val alarmIntent = Intent(context, MainActivity::class.java).apply {
-////            flags = Intent.FLAG_ACTIVITY_NEW_TASK
-//            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-//            addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT)// Required to start an Activity from a Receiver
-//        }
-//
-//        val hour = intent?.getIntExtra("hour", 0)
-//        val minute = intent?.getIntExtra("minute", 0)
-//
-//        alarmIntent.putExtra("alarm", true)
-//        alarmIntent.putExtra("hour", hour)
-//        alarmIntent.putExtra("minute", minute)
-//
-//        println("ALARM RECEIVE END")
-//        context?.startActivity(alarmIntent)
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
+            context?.startActivity(newIntent)
+        } else {
+            val notificationHandler = NotificationHandler(context!!)
+            notificationHandler.start(newIntent, alarmName ?: "WAKEY WAKEY", "Alarm Ringing")
+        }
     }
 }

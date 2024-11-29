@@ -81,10 +81,11 @@ fun AlarmDetailScreen(
             Button(
                 contentPadding = PaddingValues(horizontal = 32.dp, vertical = 8.dp),
                 modifier = Modifier.clip(RoundedCornerShape(100)),
+                enabled = alarmState.selectedAlarms?.name.isNullOrEmpty().not(),
                 onClick = {
                     val action = if(alarmState.selectedAlarms?._id == null) {
                         AlarmsAction.OnAlarmsCreate
-                    }else{
+                    } else {
                         AlarmsAction.OnAlarmsUpdate
                     }
                     onAction.invoke(action)
@@ -96,7 +97,7 @@ fun AlarmDetailScreen(
         AlarmTime(
             hour = alarmState.selectedAlarms?.hour ?: 0,
             minutes = alarmState.selectedAlarms?.minute ?: 0,
-            description = "Alarm in --",
+            description = alarmState.selectedAlarms?.countDownText.toString(),
             onClick = {
                 showTimePicker = true
             }

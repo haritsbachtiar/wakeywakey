@@ -7,8 +7,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
-import androidx.core.app.TaskStackBuilder
-import androidx.core.net.toUri
 import org.example.project.R
 
 class NotificationHandler(
@@ -23,24 +21,24 @@ class NotificationHandler(
         context.applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     }
 
-    fun <T> start(activityClass: Class<T>, message: String) {
+    fun start(alarmIntent: Intent, alarmName: String, message: String) {
         createNotificationChannel()
+        val pendingIntent = PendingIntent.getActivity(
+            context,
+            0,
+            alarmIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
 
-        val activityIntent = Intent(context, activityClass).apply {
-            this.data = "wakewakeyapp://alarm_trigger_screen".toUri()
-            addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
-        }
-
-        val pendingIntent = TaskStackBuilder.create(context)
-            .addNextIntentWithParentStack(activityIntent)
-            .getPendingIntent(0, PendingIntent.FLAG_IMMUTABLE)
+        context.startActivity(alarmIntent)
 
         val notification = NotificationCompat
             .Builder(context, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_launcher_background)
-            .setContentTitle("TEST ALARM")
+            .setChannelId(CHANNEL_ID)
+            .setContentTitle(alarmName.uppercase())
             .setContentText(message)
-            .setContentIntent(pendingIntent)
+            .setFullScreenIntent(pendingIntent, true)
             .build()
 
         notificationManager.notify(100, notification)
@@ -51,7 +49,7 @@ class NotificationHandler(
             val channel = NotificationChannel(
                 CHANNEL_ID,
                 CHANNEL_NAME,
-                NotificationManager.IMPORTANCE_DEFAULT
+                NotificationManager.IMPORTANCE_HIGH
             )
             notificationManager.createNotificationChannel(channel)
         }

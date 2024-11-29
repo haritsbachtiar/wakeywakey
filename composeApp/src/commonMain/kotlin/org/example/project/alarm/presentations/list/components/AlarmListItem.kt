@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.example.project.alarm.presentations.AlarmsAction
 import org.example.project.alarm.presentations.model.AlarmUI
+import org.example.project.alarm.presentations.toTimeStringFormat
 
 @Composable
 fun AlarmListItem(
@@ -95,13 +96,13 @@ fun AlarmListItem(
                         verticalAlignment = Alignment.Bottom
                     ) {
                         Text(
-                            text = "${alarm.hour}:${alarm.minute}",
+                            text = "${alarm.hour.toTimeStringFormat()}:${alarm.minute.toTimeStringFormat()}",
                             style = MaterialTheme.typography.displayMedium
                         )
                     }
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        "---",
+                        alarm.countDownText,
                         style = MaterialTheme.typography.labelLarge
                     )
                 }
