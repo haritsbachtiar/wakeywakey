@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import org.example.project.alarm.presentations.toTimeStringFormat
 import org.example.project.alarm.presentations.trigger.AlarmTriggerScreen
 
 class AlarmActivity : ComponentActivity() {
@@ -25,10 +26,16 @@ class AlarmActivity : ComponentActivity() {
             enableEdgeToEdge()
             AlarmTriggerScreen(
                 alarmName = name,
-                alarmTime = "$hour:$minute",
+                alarmTime = "${hour.toTimeStringFormat()}:${minute.toTimeStringFormat()}",
                 onClick = {
+                    mediaPlayer.stop()
                     mediaPlayer.release()
-                    this@AlarmActivity.startActivity(Intent(this@AlarmActivity, MainActivity::class.java))
+                    this@AlarmActivity.startActivity(
+                        Intent(
+                            this@AlarmActivity,
+                            MainActivity::class.java
+                        )
+                    )
                 }
             )
         }

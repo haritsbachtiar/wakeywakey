@@ -9,10 +9,17 @@ import android.provider.Settings
 import android.provider.Settings.ACTION_MANAGE_OVERLAY_PERMISSION
 import android.provider.Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM
 import androidx.annotation.RequiresApi
+import kotlinx.datetime.Clock
+import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.LocalTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.minus
+import kotlinx.datetime.plus
+import kotlinx.datetime.toLocalDateTime
 import org.example.project.alarm.data.AlarmScheduler
 import org.example.project.alarm.data.tables.AlarmRealmObject
 import org.example.project.data.AlarmReceiver
+import kotlin.time.Duration
 
 class AndroidPlatform : Platform {
     override val name: String = "Android ${Build.VERSION.SDK_INT}"
@@ -44,21 +51,29 @@ actual class AlarmSchedulerImp(private val context: Context): AlarmScheduler {
             }
         }
 
-        val alarmTime = LocalTime(
-            hour = alarmItem.hour,
-            minute = alarmItem.minute,
-            second = 0,
-            nanosecond = 0
-        )
+        val currentInstant = Clock.System.now()
+        val currentDateTime = currentInstant.toLocalDateTime(timeZone = TimeZone.currentSystemDefault())
+        val alarmInstant = currentInstant
+            .minus(currentDateTime.hour, DateTimeUnit.HOUR)
+            .minus(currentDateTime.minute, DateTimeUnit.MINUTE)
+            .minus(currentDateTime.second, DateTimeUnit.SECOND)
+            .plus(alarmItem.hour, DateTimeUnit.HOUR)
+            .plus(alarmItem.minute, DateTimeUnit.MINUTE)
 
-        val triggerAtMs = alarmTime.toMillisecondOfDay().toLong()
+        val alarmTriggerInstant = if (alarmInstant < currentInstant) {
+            alarmInstant.plus(24, DateTimeUnit.HOUR)
+        } else {
+            alarmInstant
+        }
+
+        val triggerAtMs = alarmTriggerInstant.toEpochMilliseconds()
 
         val intent = Intent(context, AlarmReceiver::class.java).apply {
             putExtra("name", alarmItem.name)
             putExtra("hour", alarmItem.hour)
             putExtra("minute", alarmItem.minute)
         }
-
+        println("BEFORE ALARM SAVED ${alarmManager.nextAlarmClock}")
         if(alarmManager.canScheduleExactAlarms()) {
             alarmManager.setExactAndAllowWhileIdle(
                 AlarmManager.RTC_WAKEUP,

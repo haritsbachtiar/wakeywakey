@@ -31,10 +31,14 @@ fun AlarmListScreen(
     ) {
         if (alarms.isNotEmpty()) {
             LazyColumn {
-                items(alarms) {
+                items(
+                    alarms,
+                    key = { alarm -> alarm._id.toString() }) {
                     AlarmListItem(it, onAction)
                     if (it != alarms.last()) {
                         Spacer(modifier = Modifier.height(16.dp))
+                    } else {
+                        Spacer(modifier = Modifier.height(20.dp))
                     }
                 }
             }
