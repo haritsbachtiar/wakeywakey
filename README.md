@@ -2,7 +2,7 @@
 
 An alarm clock app built with **Compose Multiplatform**, sharing UI and business logic across Android and iOS from a single Kotlin codebase.
 
-> **Status** — Android: complete and working. iOS: in progress (shared code compiles; platform-specific alarm scheduling not yet implemented).
+> **Status** — Android: complete and working. iOS: in progress — the iOS target and shared UI layer are in place, but `AlarmScheduler` has no iOS implementation yet, so alarms do not fire on that platform.
 
 ---
 
@@ -120,4 +120,6 @@ Open `iosApp/iosApp.xcodeproj` in Xcode. The shared Compose UI builds and runs; 
 
 ## Credits
 
-Built to the **Snoozeloo** design brief from Philipp Lackner's Mobile Dev Campus challenge series. The spec and UI design come from the challenge; the implementation here is my own.
+Built to the **Snoozeloo** design brief from Philipp Lackner's Mobile Dev Campus challenge series — the product spec and UI design come from the challenge, not from me.
+
+Code written by me across two accounts ([@haritsbachtiar](https://github.com/haritsbachtiar) and [@AhmadHaritsBA](https://github.com/AhmadHaritsBA)), with [@steve1rm](https://github.com/steve1rm) reviewing and merging PR #1.
